@@ -8,6 +8,9 @@ use think\Db;
 class Index extends Controller
 {
     
+	public function index(){
+		echo "hello,world";
+	}
     
     public function tuisong_test(){
         for($i=1;$i<=20;$i++){
