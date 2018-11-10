@@ -1,0 +1,60 @@
+<extend name="base/base" />
+<block name="body">
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>新增/修改用户基本信息</legend>
+</fieldset>
+ <div class='' style='    width: 899px;
+    padding: 20px 0 10px 20px;' >
+<form class="layui-form layui-form-pane" action="{:url($_toMethod)}" method="post" >
+    <input type="hidden" name="id" value="{$app.id|default=''}">
+    
+  <div class="layui-form-item" >
+      <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;分组名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="name" required  lay-verify="required" placeholder="请输入分组名称" autocomplete="off" class="layui-input" value="{$app.name|default=''}">
+    </div>
+  </div>
+
+  <div class="layui-form-item" >
+      <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;分组描述</label>
+    <div class="layui-input-block">
+     <textarea name="description" placeholder="请输入分组描述"  class="layui-textarea " >{$app.description|default=''}</textarea>
+    </div>
+  </div>
+
+    
+    
+  <div class="layui-form-item">
+    <div class="">
+     <button class="layui-btn dopost" lay-submit  url="{:url($_toMethod)}" lay-filter="myform"  target-form="layui-form">立即提交</button>
+      <a  class="layui-btn layui-btn-primary" href="#" onclick="javascript:history.go(-1);"><i class='iconfont '>&#xe697;</i>返回列表</a>
+    </div>
+  </div>
+</form>
+ </div>
+
+</block>
+<block name='script'>
+<link href="__PUBLIC__/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-all.js" charset="utf-8"></script>
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+  //监听提交
+  form.on('submit(myform)', function(data){
+   // layer.msg(JSON.stringify(data.field));
+    doAjaxPost($(".dopost"));
+    return false;
+  });
+  
+
+
+  
+});
+</script>
+
+<script>
+    highlight_subnav('menu_system','menu_admin_grouplist','menu_admin');
+</script>
+</block>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>渔佳-用户信息查询</title>
+    <script src="__PUBLIC__/dist/agent/js/flexible.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/css/reset.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/css/global.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/font/iconfont.css">
+    
+<script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+<script src="__PUBLIC__/dist/js/common.js?v=<?php echo time().mt_rand(1,1111); ?>"></script>
+<script src="__PUBLIC__/dist/js/fancybox/jquery.fancybox.js"></script>
+</head>
+<body>
+    <div  id="main">
+    <div class="welcome">
+        尊敬的{$app.name}，欢迎您！
+    </div>
+    <!-- 搜索框 -->
+    <div class="search-input">
+        <input type="text" name="" id="search_content" value="<?php $content=input('content',''); echo $content;  ?>" placeholder="请输入用户名称...">
+        <button id="search">搜索</button>
+    </div>
+    <!-- 切换框 -->
+    <div class="search-tab">
+        <div class="search-tab-item acitve" thetype="0">全部</div>
+        <div class="search-tab-item"  thetype="1">正常</div>
+        <div class="search-tab-item"  thetype="2">催单</div>
+        <div class="search-tab-item"  thetype="3">欠费</div>
+    </div>
+    <!-- 列表 -->
+    <ul class="user-list-wrap">
+        <notEmpty name="_list">
+            <volist name="_list" id="vo">
+                <li class="user-list">
+                    <div class="user-list-date {$vo.color}">
+                        <span>到期日期：{$vo.end_time}</span>
+                        <span>剩余：{$vo.diff_date}天</span>
+                    </div>
+                    <div class="user-list-con">
+                        <img src="{$vo.avator}">
+                        <div class="user-list-info">
+                            <p>用户姓名：{$vo.name}</p>
+                            <p>联系方式：{$vo.telephone}</p>
+                            <p>设&nbsp;&nbsp;备&nbsp;&nbsp;号：{$vo.equip_code}</p>
+                            <p>设备类型：{$vo.type}</p>
+                        </div>
+                    </div>
+                </li>
+            </volist>
+        </notempty>
+
+    </ul>
+    </div>
+</body>
+<script>
+$(function(){
+    var now_type =<?php echo input('type',0); ?>;
+    $(".search-tab-item").each(function(){
+        var thetype =$(this).attr('thetype');
+        if(now_type==thetype){
+            $(this).siblings().removeClass('acitve');
+            $(this).addClass('acitve');
+        }
+    })
+    
+    $(".search-tab-item").click(function(){
+        $(this).siblings().removeClass('acitve');
+        $(this).addClass('acitve');
+        var thetype =$(this).attr('thetype');
+        window.location.href='/Agent/myclient?type='+thetype;
+    })
+})    
+</script>
+
+<!--翻页-->
+<script>
+var page = 2, //分页码
+    off_on = true, //分页开关(滚动加载方法 1 中用的)
+    timers = null; //定时器(滚动加载方法 2 中用的)    
+//加载数据
+var LoadingDataFn = function() {
+    getApiData('/Agent/get_my_client_list',"page="+page,get_result);
+    
+    off_on = true; 
+};
+
+function get_result(rs){
+    var thearr =rs.data;
+    if (thearr === undefined || thearr.length == 0) {
+        off_on=false;
+    }else{
+        var str="";
+        for(i=0;i<thearr.length;i++){
+            str+='<li class="user-list"><div class="user-list-date '+thearr[i]['color']+'"><span>到期日期：'+thearr[i]['end_time']+'</span>'+
+                   '<span>剩余：'+thearr[i]['diff_date']+'天</span></div><div class="user-list-con"><img src="'+thearr[i]['avator']+'">'+
+                   '<div class="user-list-info"> <p>用户姓名：'+thearr[i]['name']+'</p><p>联系方式：'+thearr[i]['telephone']+'</p>'+
+                   '<p>设&nbsp;&nbsp;备&nbsp;&nbsp;号：'+thearr[i]['equip_code']+'</p><p>设备类型：'+thearr[i]['type']+'</p></div></div></li>';
+        }
+        $(".user-list-wrap").append(str);
+    }
+}
+    
+$(function(){    
+//滚动加载方法1
+        
+$(window).scroll(function() {
+    if(off_on==false){
+        return;
+    };
+
+    var wScrollY = window.scrollY; // 当前滚动条位置    
+    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）    
+    var bScrollH = document.body.scrollHeight; // 滚动条总高度        
+    if (wScrollY + wInnerH >= bScrollH) {            
+        if (off_on) {
+            off_on = false;
+            console.log("第"+page+"页");
+            LoadingDataFn();  //调用执行上面的加载方法
+            page++;
+        }
+    }   
+    
+    
+    //当时滚动条离底部60px时开始加载下一页的内容
+    if (($(this)[0].scrollTop + $(this).height() + 60) >= $(this)[0].scrollHeight) {
+        //这里用 [ off_on ] 来控制是否加载 （这样就解决了 当上页的条件满足时，一下子加载多次的问题啦）
+        if (off_on) {
+            //off_on = false;
+           
+            console.log("第"+page+"页");
+            LoadingDataFn();  //调用执行上面的加载方法
+             page++;
+        }
+    }
+});
+});
+$("#search").click(function(){
+    var content =$("#search_content").val();
+    if(content==''){
+        alert('请输入搜索内容');return;
+    }
+    window.location.href="/Agent/myclient?content="+content; 
+    
+    
+})
+</script>
+</html>

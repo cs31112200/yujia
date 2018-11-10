@@ -1,0 +1,36 @@
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） layui-nav-itemed此样式为展开的 -->
+      <ul class="layui-nav layui-nav-tree second_tree"  lay-filter="second_nav">
+          
+        <notempty name="$menu">
+            <volist name='menu' id='vo'>
+            <div class="menu_switch" id="se_{$vo.id_name}" style="display:none;">
+                <notempty name="$vo.childs">
+                    <volist name='$vo.childs' id='vo1'>
+                        <li class="layui-nav-item " id='{$vo1.id_name}'>
+                          <a class="" href="{$vo1.href}"  >{$vo1.name}</a>
+                          <notempty name="$vo1.childs">
+                          <dl class="layui-nav-child">
+                            <volist name='$vo1.childs' id='vo2'>
+                            <dd id='{$vo2.id_name}' class=""><a href="{$vo2.href}">{$vo2.name}</a></dd>
+                            </volist>
+                          </dl>
+                          </notempty>
+                        </li>
+                     </volist>
+                </notempty>    
+            </div>
+             </volist>
+        </notempty>
+        
+      </ul>
+    </div>
+  </div>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  element.init();
+});
+</script>

@@ -1,0 +1,121 @@
+<extend name="base/base" />
+<block name='mystyle'>
+    <style>
+.layui-form-pane .layui-form-label{width:120px !important;}        
+.layui-form-pane .layui-input-block{margin-left:120px !important;}        
+    </style>
+</block>
+<block name="body">
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>修改密码</legend>
+</fieldset>
+ <div class='' style='    width: 899px;
+    padding: 20px 0 10px 20px;' >
+<form class="layui-form layui-form-pane" action="{:url('pwd_change')}" method="post" >
+  
+  <div class="layui-form-item" >
+    <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;旧密码</label>
+    <div class="layui-input-block">
+      <input type="password" name="old_password"  placeholder="请输入旧密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  
+  <div class="layui-form-item" >
+    <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;新密码</label>
+    <div class="layui-input-block">
+      <input type="password" name="new_password"  placeholder="请输入新密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+    
+  <div class="layui-form-item test" id="box1">
+    <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;确认新密码</label>
+    <div class="layui-input-block">
+      <input type="password" name="new_repassword"   placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+    
+    
+  <div class="layui-form-item">
+    <div class="">
+     <button class="layui-btn dopost" lay-submit  url="{:url('pwd_change')}" lay-filter="myform"  target-form="layui-form">立即提交</button>
+    </div>
+  </div>
+</form>
+ </div>
+
+</block>
+<block name='script'>
+<link href="__PUBLIC__/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-all.js" charset="utf-8"></script>
+<script>
+//Demo
+var form ="";
+layui.use('form', function(){
+   form = layui.form;
+  //监听提交
+  form.on('submit(myform)', function(data){
+   // layer.msg(JSON.stringify(data.field));
+    doAjaxPost($(".dopost"));
+    return false;
+  });
+form.on('select(merchant_id)', function(data){
+
+  var thevalue =data.value;
+  var param ="merchant_id="+thevalue;
+  getApiData('/admin/getGroupList',param,get_result);
+  
+  
+});
+    form.on('select(group_id)', function(data){
+
+        var thevalue =data.value;
+        var param ="group_id="+thevalue;
+        getApiData('/Resources/get_station_one',param,get_station);
+
+
+    });
+
+    function get_station(rs){
+
+        $("#station_id").children().remove();
+        if(rs.code==0){
+            var str="";
+            for(i=0;i<rs.data.length;i++){
+                str+="<option value='"+rs.data[i]['id']+"'>"+rs.data[i]['station_name']+"</option>";
+            }
+
+            $("#station_id").append(str);
+
+
+        }
+        form.render('select');
+    }
+
+
+    function get_result(rs){
+
+    $("#group_id").children().remove();
+    if(rs.code==0){
+        var str="";
+        for(i=0;i<rs.data.length;i++){
+            str+="<option value='"+rs.data[i]['id']+"'>"+rs.data[i]['name']+"</option>";
+        }
+        
+        $("#group_id").append(str);
+        
+        
+    }
+    form.render('select');
+}    
+
+
+  
+});
+
+</script>
+
+<script>
+    highlight_subnav('test6','menu_index','');
+</script>
+</block>

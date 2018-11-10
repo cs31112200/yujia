@@ -1,0 +1,224 @@
+<extend name="base/base" />
+<block name="body">
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>新增/修改常见问题</legend>
+</fieldset>
+ <div class='' style='    width: 899px;
+    padding: 20px 0 10px 20px;' >
+<form class="layui-form layui-form-pane form-horizontal" action="{:url($_toMethod)}" method="post"  validatable="true" name="form1" id="form1" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="{$app.id|default=''}">
+    
+
+
+  <div class="layui-form-item" >
+      <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;标题</label>
+    <div class="layui-input-block">
+     <input type="text" name="title" placeholder="请输入标题" required class="layui-input" value="{$app.title|default=''}">
+    </div>
+  </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;回答内容</label>
+        <div class="layui-input-block">
+            <textarea name="content"  class='test2' id="bos3" rows="15" cols='80'  >{$app.content|default=''}</textarea>
+
+            <!--<textarea name="content" placeholder="请输入回答内容" id="bos3" class="layui-textarea test2" >{$app.content|default=''}</textarea>-->
+        </div>
+    </div>
+
+
+
+  <div class="layui-form-item">
+    <div class="">
+     <button class="layui-btn dopost" lay-submit  url="{:url($_toMethod)}" lay-filter="myform"  target-form="layui-form">立即提交</button>
+      <a  class="layui-btn layui-btn-primary" href="#" onclick="javascript:history.go(-1);"><i class='iconfont '>&#xe697;</i>返回列表</a>
+    </div>
+  </div>
+</form>
+ </div>
+
+</block>
+<block name='script'>
+<link href="__PUBLIC__/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css"  media="all">
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-all.js" charset="utf-8"></script>
+<script type="text/javascript" src="__PUBLIC__/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/jquery.uploadify.min.js"></script>
+
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+  //监听提交
+  form.on('submit(myform)', function(data){
+   // layer.msg(JSON.stringify(data.field));
+    doAjaxPost($(".dopost"));
+    return false;
+  });
+  
+
+
+  
+});
+</script>
+    <script>
+        layui.use(['form', 'layedit', 'laydate'], function(){
+            var form = layui.form
+                    ,layer = layui.layer
+                    ,layedit = layui.layedit
+                    ,laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+
+            //监听提交
+            form.on('submit(demo1)', function(data){
+                layer.alert(JSON.stringify(data.field), {
+                    title: '最终的提交信息'
+                })
+                return false;
+            });
+
+
+
+
+        });
+    </script>
+    <script>
+        layui.use('upload', function(){
+            var $ = layui.jquery
+                    ,upload = layui.upload;
+//普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1'
+                , url: '/upload/upload'
+                ,auto: false
+                //,multiple: true
+                ,bindAction: '#submit'
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                ,done: function(res){
+                    //如果上传失败
+                    if(res.code == 0){
+                        return layer.msg('上传失败');
+                    }
+                    if(res.code == 1){
+                        console.log(res.data);
+                        $('#picture').val(res.data.show_url);
+                        return layer.msg('上传成功');
+                    }
+                    //上传成功
+
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
+//选完文件后不自动上传
+            upload.render({
+                elem: '#test8'
+                ,url: '/upload/upload'
+                ,accept: 'file' //普通文件
+                ,auto: false
+                //,multiple: true
+                ,bindAction: '#test9'
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(); //上传loading
+                }
+                ,done: function(res){
+                    layer.closeAll('loading'); //关闭loading
+                    console.log(res);
+                    //如果上传失败
+                    if(res.code == 0){
+                        return layer.msg('上传失败');
+                    }
+                    if(res.code == 1){
+                        console.log(res.data);
+                        $('#url').val(res.data.show_url);
+                        return layer.msg('上传成功');
+                    }
+                    //上传成功
+                }
+                ,error: function(index, upload){
+                    //当上传失败时，你可以生成一个“重新上传”的按钮，点击该按钮时，执行 upload() 方法即可实现重新上传
+                }
+            });
+//        //指定允许上传的文件类型
+//        upload.render({
+//            elem: '#test3'
+//            ,url: '/Upload/upload'
+//            ,accept: 'file' //普通文件
+////            ,exts: 'apk|zip'
+//            ,done: function(res){
+//                console.log(res)
+//                //如果上传失败
+//                if(res.code == 0){
+//                    return layer.msg('上传失败');
+//                }
+//                if(res.code == 1){
+//                    console.log(res.data);
+//                    $('#url').val(res.data.show_url);
+//                    return layer.msg('上传成功');
+//                }
+//                //上传成功
+//            }
+//        });
+        })
+
+    </script>
+<script>
+//    $(document).ready(function() {
+        //高亮显示
+        highlight_subnav('menu_client','menu_version_list');
+//        var upload_url="http://admin.centerwl.com/{$app.url|default=''}";
+//        var is_disable ="0";
+//        doUploadFile('file_upload','down_url',upload_url,is_disable,'fileQueue','200MB','*.apk;*.jpg');
+//    });
+</script>
+<link href="__PUBLIC__/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-all.js?v=<?php echo mt_rand(10000,99999); ?>" charset="utf-8"></script>
+    <script>
+        KindEditor.ready(function(K) {
+            K.create('textarea[id="bos3"]', {
+                langType : 'zh-CN',
+                //	filterMode : false,
+                formatUploadUrl:false,
+                pasteType : '2',
+                uploadJson : "<?php echo url('/Upload/kJupload'); ?>",
+                newlineTag : 'br',
+                //    allowFileManager : false,
+                items : [
+                    'source', '|', 'undo', 'redo', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                    'superscript', 'clearhtml', 'quickformat', '|', 'image', 'multiimage', 'insertfile', 'video', '/',
+                    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'table', 'hr', 'baidumap',
+                    'anchor', 'link', 'unlink'
+                ],
+                afterBlur: function(){this.sync();}
+            });
+        });
+
+    </script>
+
+
+
+</block>

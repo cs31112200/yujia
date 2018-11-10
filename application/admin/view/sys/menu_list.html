@@ -1,0 +1,82 @@
+<extend name="base/base" />
+<block name="body">
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>菜单列表</legend>
+</fieldset>
+    
+<div class='layui-row layui-col-space10' style='padding:12px 15px;'>
+    <a href="{:url('menu_add')}" class='layui-btn'><i class="iconfont">&#xe6b9;</i>新增菜单</a>
+    <a  class='layui-btn layui-btn-danger' ope="delete" model="Menu" url="{:url('menu_change_status')}"  onclick="change_status($(this));"><i class="iconfont">&#xe69a;</i>删除选中</a>
+</div>    
+    <table class="layui-table" lay-data="{height:'full', url:'/sys/get_menu_list/',page:true,limit:10,where:{pid:<?php echo input('pid',0); ?>},size:'lg',id:'tabletest'}" lay-filter='thetable' >
+  <thead>
+    <tr>
+      <th lay-data="{checkbox:true}"></th>
+      <th lay-data="{field:'id', width:80, sort: true}" style='text-align: center;'>ID</th>
+      <th lay-data="{field:'name', width:120, templet: '#nameTpl'}"> 菜单名称</th>
+      <th lay-data="{field:'href', width:240}">跳转地址</th>
+      <th lay-data="{field:'id_name', width:330}">id名称</th>
+      <th lay-data="{field:'status', width:120}">状态</th>
+      <th lay-data="{field:'is_sys', width:120}">是否属于系统</th>
+      <th lay-data="{field:'is_show', width:120}">是否展示</th>
+      <th lay-data="{ width:220,toolbar:'#opebar'}">操作</th>
+
+    </tr>
+  </thead>
+</table>
+      
+      
+      
+</block>
+<block name='script'>
+<script type="text/html" id="nameTpl">
+<a href="?pid={{d.id}}" class="layui-table-link">{{d.name}}</a>
+</script>
+<script type="text/html" id="opebar">
+  <a class="layui-btn layui-btn-small" lay-event="edit" style='text-align:center;'><i class='iconfont'>&#xe910;</i>编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-small one_del" ope="delete" model="Menu" url="{:url('menu_change_status')}" lay-event="del" style='text-align:center;'><i class="iconfont">&#xe69a;</i>删除</a>
+</script>
+
+<script>
+var thechoose="";    
+layui.use('table', function(){
+    var  table = layui.table;
+table.on('tool(thetable)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+  var data = obj.data; //获得当前行数据
+  var layEvent = obj.event; //获得 lay-event 对应的值
+  var tr = obj.tr; //获得当前行 tr 的DOM对象
+  var ondel=tr.find(".one_del");
+
+  if(layEvent === 'edit'){ 
+    window.location.href="/Sys/menu_add?id="+data.id;
+  } else if(layEvent === 'del'){ //删除
+        thechoose=data.id;
+        change_status(ondel);
+  };
+}); 
+
+
+/*****多选******/
+table.on('checkbox(thetable)', function(obj){
+    var checkStatus = table.checkStatus('tabletest'); //test即为基础参数id对应的值
+    var thedata =checkStatus.data;
+    var newarr =new Array();
+    if(thedata.length>0){
+        
+        for(i=0;i<thedata.length;i++){
+            newarr[i]=thedata[i].id;
+        }
+        thechoose =newarr.join(',');
+    }else{
+        thechoose="";
+    }
+});
+});
+
+
+
+</script>
+<script>
+    highlight_subnav('menu_system','menu_sys_menu','menu_sys');
+</script>
+</block>

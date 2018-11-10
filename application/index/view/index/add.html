@@ -1,0 +1,158 @@
+<extend name="base/base" />
+<block name="body">
+<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+	<ul class="breadcrumb">
+		<li><i class="ace-icon fa fa-home home-icon"></i><a href="#">首页</a></li>
+		<li><a href="#">活动管理</a></li>
+		<li class="active">添加</li>
+	</ul>
+</div>
+
+<div class="page-content">
+    <div class="page-header">
+		<h1>添加</h1>
+	</div>
+
+    <div class="row rowblock">
+        <div class="col-xs-12">
+
+
+<form class="form-horizontal" action=" {:url($_toMethod)}" validatable="true" name="form1" id="form1" method="post">
+    
+    <input type='hidden' name="id" value="{$app.id|default=''}">
+    <div class="form-group">
+        <label for="name" class="col-sm-1 control-label no-padding-right"><font class="red">*</font>姓名</label>
+        <div class="col-sm-11">
+            <div class="clearfix">
+            <input type="text" name="name" id="name" value="{$app.name|default=''}" size="40" class="col-xs-12 col-sm-4" /></div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="tel" class="col-sm-1 control-label no-padding-right"><font class="red">*</font>电话</label>
+        <div class="col-sm-11">
+            <div class="clearfix">
+            <input type="text" name="tel" id="name" value="{$app.tel|default=''}" size="40" class="col-xs-12 col-sm-4" /></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <label for="start_time" class="col-sm-1 control-label no-padding-right"><font class="red">*</font>活动起始日期</label>
+        <div class="col-sm-11">
+                        <div class="clearfix">
+                        <input type="text" name="start_time" id="start_time" value="{$app.start_time|default=''}" size="16" placeholder="开始日期" class="col-xs-12 col-sm-4" />  
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+
+    <label for="start_time" class="col-sm-1 control-label no-padding-right"><font class="red">*</font>活动结束日期</label>
+    <div class="col-sm-11">
+        <div class="clearfix">
+                    <input type="text" name="end_time" id="end_time" value="{$app.end_time|default=''}" size="16" placeholder="结束日期" class="col-xs-12 col-sm-4" />            </div>
+    </div>
+    
+    </div>
+
+        <div class="form-group">
+    		<label class="col-sm-1 control-label no-padding-right"> </label>	
+            <div class="col-sm-11">
+                
+            <button type="button"  class="btn btn-sm btn-primary ajax-post" target-form="form-horizontal"><i class="fa fa-arrow-up"></i> 提交</button>
+
+
+            <button type="button" class="btn btn-sm btn-danger" onclick="javascript:history.go(-1);"><i class="fa fa-repeat"></i> 返回列表</button>
+    		</div>
+    	</div>
+</form>
+        </div>
+    </div>
+</div>    
+    </block>
+<block name='script'>
+    
+<link href="__PUBLIC__/dist/js/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/dist/js/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/dist/js/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/dist/js/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<link href="__PUBLIC__/dist/js/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/dist/js/bootstrapValidator/bootstrapValidator.min.css"/>
+<script type="text/javascript" src="__PUBLIC__/dist/js/bootstrapValidator/bootstrapValidator.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#start_time').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",    
+        minuteStep:2,  
+        initialDate:"<?php echo date('Y-m-d H:i:s',time()); ?>",
+        autoclose:true,
+    });
+    $('#end_time').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",  
+        minuteStep:3,       
+        initialDate:"<?php echo date('Y-m-d H:i:s',time()); ?>",
+        autoclose:true,
+    });
+
+});
+
+</script>    
+    
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#form1').bootstrapValidator({
+    	excluded: [':disabled'],
+		feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: '名称不能为空'
+                    },
+                    stringLength: {
+                        max: 60,
+                        message: '最多允许60个字'
+                    }
+                }
+            },
+            tel: {
+                validators: {
+                    notEmpty: {
+                        message: '电话不能为空'
+                    },
+                    stringLength: {
+                        max: 11,
+                        message: '最多允许11个字'
+                    }
+                }
+            },
+
+            start_time: {
+                trigger:"change", 
+                validators: {
+                    notEmpty: {
+                        message: '请选择开始时间'
+                    }
+                }
+            },
+            end_time: {
+                trigger:"change", 
+                validators: {
+                    notEmpty: {
+                        message: '请选择结束时间'
+                    },
+                }
+            },
+        }
+    })
+});
+</script>
+</block>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>渔佳-我的个人中心</title>
+    <script src="__PUBLIC__/dist/agent//js/flexible.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent//css/reset.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent//css/global.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/font/iconfont.css">
+    
+<script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+<script src="__PUBLIC__/dist/js/common.js?v=<?php echo time().mt_rand(1,1111); ?>"></script>
+<script src="__PUBLIC__/dist/js/fancybox/jquery.fancybox.js"></script>
+</head>
+<body>
+    <div class="my-top">
+        <img src="{$app.headimgurl}">
+        <div class="my-top-name">姓名：{$app.name}</div>
+        <div class="my-top-msg">联系方式：{$app.contact}</div>
+        <div class="my-top-msg">地址：{$app.province}-{$app.city}-{$app.area}-{$app.address}</div>
+    </div>
+
+    <div class="fn-list-wrap">
+        <div class="fn-list pageclick" url="{:url('mycard')}">
+            <div class="fn-list-l">
+                <i class="iconfont icon-yinxingqiazhifu"></i>
+                <span>我的名片</span>
+            </div>
+            <div class="fn-list-r">&nbsp;</div>
+        </div>
+        <div class="fn-list pageclick" url="{:url('myclient')}">
+            <div class="fn-list-l">
+                <i class="iconfont icon-iconfuzhi"></i>
+                <span>我的客户</span>
+            </div>
+            <div class="fn-list-r">&nbsp;</div>
+        </div>
+      <!--  <div class="fn-list pageclick"  url="{:url('mycommission')}">
+            <div class="fn-list-l">
+                <i class="iconfont icon-tuikuanshouhou"></i>
+                <span>我的佣金</span>
+            </div>
+            <div class="fn-list-r">&nbsp;</div>
+        </div>-->
+    </div>
+
+    <div class="foot-out">
+        <div class="foot-out-btn" onclick='loout();'>退出登录</div>
+    </div>
+</body>
+<script>
+    
+    function loout(){
+        getApiData('/Agent/loout','',lo_result);
+    }
+    
+    function lo_result(rs){
+        if(rs.code==1){
+            window.location.href="/Login/login";
+        }
+    }
+    
+    
+    $(".pageclick").click(function(){
+        var url =$(this).attr('url');
+        window.location.href=url;
+    })
+ </script>
+</html>

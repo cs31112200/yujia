@@ -1,0 +1,116 @@
+<extend name="base/base" />
+<block name="body">
+<div class="page-content">
+    <div class="page-header"><h1>活动管理</h1></div>
+    
+    <div class="row">
+        <div class="search-form col-xs-12">
+            <div class="searchDiv">
+                <ul class="clearfix">
+                    <li class="col-xs-3">
+                        <select name="m_id" id="m_id" class="col-xs-12" url="m_id">
+                            <option value="">[企业]</option>
+                            <option value="3">素赞食品</option>
+                            <option value="2">泓一食品</option>
+                            <option value="1">椰牛食品</option>
+                        </select>
+                    </li>
+                    <li class="col-xs-3">
+                        <select name="status" id="status" class="col-xs-12" url="status">
+                            <option value="">[状态]</option>
+                            <option value="开启">开启</option>
+                            <option value="关闭">关闭</option>
+                        </select>
+                    </li>
+                    <li class="col-xs-3"><input type="text" name="filter" id="filter" value="" class="col-xs-12" size="12" placeholder="请输入活动名称搜索" /></li>
+                    <li class="col-xs-3"><a class="btn btn-white btn-search" href="javascript:;" id="search" url="/adm/index.php?c=Activity&a=index"> <i class="icon-search"></i> 检 索 </a></li>
+                </ul>
+            </div>
+	</div>
+
+        <div class="col-xs-12">
+     <a href="{:url('add')}" class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> 新增活动</a>
+     <button class="btn btn-sm btn-primary btn-success ajax-post" url="{:url('changeStatus?action=open')}" target-form="ids"><i class="fa fa-check-square-o"></i>启 用</button>
+     <button class="btn btn-sm btn-danger ajax-post" url="{:url('changeStatus?action=close')}" target-form="ids"><i class="fa fa-ban"></i>禁 用</button>
+
+            <div class="pull-right">
+
+            </div>
+        </div>
+
+    <div class="col-xs-12">
+            <table cellpadding="0" class="table table-striped table-bordered table-hover" id="data_table">
+              <thead>
+              <tr>
+                <th class="center">
+                    <label class="pos-rel">
+                            <input type="checkbox" class="check-all">
+                            <span class="lbl"></span>
+                    </label>
+                </th>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>电话</th>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>操作</th>
+              </tr>
+              </thead>
+              <tbody>
+                <notempty name='_list'>
+                    
+                  <volist name="_list" id="at">
+                    <tr>
+                      <td class="center">
+                        <label class="pos-rel">
+                                <input type="checkbox" class="ids"  name="id[]" value="{$at.id}" >
+                                <span class="lbl"></span>
+                        </label>
+                      </td>
+                      <td>{$at.id}</td>
+                      <td>{$at.name}</td>
+                      <td class="">{$at.tel}</td>
+                      {$at.status?"<td style='color:green;'>正常</td>":"<td style='color:red;'>失效</td>"}
+                      <td>{$at.create_time|date='Y-m-d',###}  </td>
+                      <td>
+                            <a href={:url('add?id='.$at['id'])}" class="btn btn-xs btn-info"><i class="icon-edit"></i> 编辑</a>
+                            <a href="/adm/index.php?c=Activity&a=remove&id=4" onclick="return confirm('您确定要删除该记录？');" class='delete btn btn-xs btn-danger'><i class="icon-trash"></i> 删除</a>
+                      </td>
+                    </tr>
+                  </volist>
+                </else>
+                <td colspan="7" class="text-center"> aOh! 暂时还没有内容! </td>
+                </notempty>
+              </tbody>
+            </table>
+    </div>
+
+        <div class="col-xs-12">
+            <div class="pull-right">
+                {$_page|default=''}
+           </div>
+        </div>
+
+    </div>
+</div>
+</block>
+<block name='script'>
+<script>
+    
+   
+
+$(function(){
+    //高亮显示 
+highlight_subnav('menu_news_index','menu_news');
+
+    $("#bootbox-confirm").on(ace.click_event, function() {
+            bootbox.confirm("Are you sure?", function(rs) {
+                    if(rs) {
+                            //
+                            alert(1);
+                    }
+            });
+    });
+})
+</script>
+</block>

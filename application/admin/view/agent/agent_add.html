@@ -1,0 +1,292 @@
+<extend name="base/base" />
+<block name="mystyle">
+    <style>
+        .layui-upload-list{
+            width:200px;height:200px;
+        }
+        .layui-upload-list img{ width:100%;}
+    </style>
+</block>
+<block name="body">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>新增/修改代理</legend>
+    </fieldset>
+    <div class='' style='    width: 899px;
+    padding: 20px 0 10px 20px;' >
+        <form class="layui-form layui-form-pane form-horizontal" action="{:url($_toMethod)}" method="post"  validatable="true" name="form1" id="form1" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{$app.id|default=''}">
+
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;代理名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" placeholder="请输入代理名称" required class="layui-input" value="{$app.name|default=''}">
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;联系方式</label>
+                <div class="layui-input-block">
+                    <input type="text" name="contact" placeholder="请输入联系方式" required class="layui-input" value="{$app.contact|default=''}">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;职位</label>
+                <div class="layui-input-block">
+                    <?php $select=isset($app['duty'])?$app['duty']:'';  echo model('Ui')-> getModelNorSelectList('index/Yxorder','getDuty','','duty','',$select); ?>
+                </div>
+            </div>
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;地址</label>
+                <div class="layui-input-block">
+                    <!--<div class="select-down-more">-->
+                    <!--<div class="clearfix col-xs-12 col-sm-4">-->
+                    <div class='layui-col-md4'>
+                        <?php $province =(isset($app['province']) && !empty($app['province']))?$app['province']:model('admin/Area')->GetNameById('福建');?>
+
+                        <?php echo (model('admin/Ui')->getRelationSelectList('Area','GetProvinceList','','id','region_name','province',1,$province,'','1','get_city')); ?>
+                    </div>
+                    <div class='layui-col-md4'>
+                        <?php $city =(isset($app['city']) && !empty($app['city']))?$app['city']:model('admin/Area')->GetNameById('厦门',2); ?>
+                        <?php echo (model('admin/Ui')->getRelationSelectList('Area','GetCityList',$province,'id','region_name','city',2,$city,'','1','get_area'));  ?>
+                    </div>
+
+                    <div class='layui-col-md4'>
+                        <?php $area =(isset($app['area']) && !empty($app['area']))?$app['area']:model('admin/Area')->GetNameById('湖里区',3);  ?>
+                        <?php echo (model('admin/Ui')->getRelationSelectList('Area','GetAreaList',$city,'id','region_name','area',3,$area,'','1'));  ?>
+                    </div>
+                </div>
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;详细地址</label>
+                <div class="layui-input-block">
+                    <textarea name="address" rows="3" cols="52" placeholder="" required class="layui-input">{$app.address|default=''}</textarea>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <div class="">
+                    <button class="layui-btn dopost" lay-submit  url="{:url($_toMethod)}" lay-filter="myform"  target-form="layui-form">立即提交</button>
+                    <a  class="layui-btn layui-btn-primary" href="#" onclick="javascript:history.go(-1);"><i class='iconfont '>&#xe697;</i>返回列表</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</block>
+<block name='script'>
+    <link href="__PUBLIC__/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__PUBLIC__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/jquery.uploadify.min.js"></script>
+
+    <script>
+        //Demo
+        layui.use('form', function(){
+            var form = layui.form;
+            //监听提交
+            form.on('submit(myform)', function(data){
+                // layer.msg(JSON.stringify(data.field));
+                doAjaxPost($(".dopost"));
+                return false;
+            });
+
+            form.on('checkbox(is_hand)', function(data){
+                var the_status =data.elem.checked;
+                //  var the_value =$("#type_name").val();
+                $("#theselect").toggle();
+                $("#theselect2").toggle();
+                if(the_status==true){
+                    $("#type_name").attr('disabled',true);
+                    $("#type_name2").removeAttr('disabled');
+                }else{
+                    $("#type_name2").attr('disabled',true);
+                    $("#type_name").removeAttr('disabled');
+                }
+                console.log(data.elem.checked);
+            });
+
+
+        });
+    </script>
+    <script>
+        layui.use(['form', 'layedit', 'laydate'], function(){
+            var form = layui.form
+                    ,layer = layui.layer
+                    ,layedit = layui.layedit
+                    ,laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+
+            //监听提交
+            form.on('submit(demo1)', function(data){
+                layer.alert(JSON.stringify(data.field), {
+                    title: '最终的提交信息'
+                });
+                return false;
+            });
+
+
+
+
+        });
+    </script>
+    <script>
+        layui.use('upload', function() {
+            var $ = layui.jquery
+                    , upload = layui.upload;
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1'
+                , url: '/upload/upload'
+                ,auto: false
+                //,multiple: true
+                ,bindAction: '#submit'
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                    layer.load(); //上传loading
+                }
+                ,done: function(res){
+                    layer.closeAll('loading'); //关闭loading
+                    console.log(res);
+                    //如果上传失败
+                    if(res.code == 0){
+                        return layer.msg('上传失败');
+                    }
+                    if(res.code == 1){
+                        console.log(res.data);
+                        $('#img').val(res.data.show_url);
+                        return layer.msg('上传成功');
+                    }
+                    //上传成功
+
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
+        })
+    </script>
+    <script>
+        //高亮显示
+        highlight_subnav('menu_client','menu_icons_list');
+
+    </script>
+    <script>
+        function get_city(){
+            var province_name = $('#province').val();
+            var url = '/Agent/getCityList';
+            var para = "province_name="+province_name;
+            getApiData(url, para, get_class_result);
+        }
+        function get_class_result(rs){
+            if(rs.code == 1){
+                var html = '';
+                var name ='';
+                $.each(rs.data, function (index, item) {
+                    html += '<option value="'+item.id+'">'+item.region_name+'</option>';
+                    if(index==0)
+                        name =item.region_name;
+                });
+                $('#city').html(html);
+                get_area();
+            }else{
+                alertMsg(0,rs.msg);
+            }
+        }
+
+        function get_area(){
+            var city_name = $('#city').val();
+
+
+
+            var url = '/Agent/getAreaList';
+            var para = "city_name="+city_name;
+            getApiData(url, para, get_class_result1);
+        }
+        function get_class_result1(rs){
+            if(rs.code == 1){
+                var html = '';
+                $.each(rs.data, function (index, item) {
+                    html += '<option value="'+item.id+'">'+item.region_name+'</option>';
+                });
+                $('#area').html(html);
+
+            }else{
+                alertMsg(0,rs.msg);
+            }
+        }
+
+    </script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-fonts.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-part2.min.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/js/fancybox/jquery.fancybox.css" />
+    <block name="css_style"></block>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-ie.min.css" />
+    <![endif]-->
+    <script src="__PUBLIC__/dist/js/ace-extra.min.js"></script>
+    <!--[if lte IE 8]>
+    <script src="__PUBLIC__/dist/js/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="__PUBLIC__/dist/js/respond/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if !IE]> -->
+    <script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/style.css" />
+    <script src="__PUBLIC__/dist/js/common.js?v=<?php echo time().mt_rand(1,1111); ?>"></script>
+
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='__PUBLIC__/dist/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+    </script>
+    <script src="__PUBLIC__/dist/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/dist/js/ace-elements.min.js"></script>
+    <script src="__PUBLIC__/dist/js/ace.min.js"></script>
+    <script src="__PUBLIC__/dist/js/bootbox.js"></script>
+    <script src="__PUBLIC__/dist/js/fancybox/jquery.fancybox.js"></script>
+</block>

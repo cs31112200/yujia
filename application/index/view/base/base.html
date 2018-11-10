@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title>{$_name|default=''}</title>
+<meta name="description" content="测试" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<link rel="stylesheet" href="__PUBLIC__/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/dist/css/font-awesome.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/dist/font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/dist/css/ace-fonts.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/dist/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+<!--[if lte IE 9]>
+<link rel="stylesheet" href="__PUBLIC__/dist/css/ace-part2.min.css" class="ace-main-stylesheet" />
+<![endif]-->
+<link rel="stylesheet" href="__PUBLIC__/dist/css/ace-skins.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/dist/css/ace-rtl.min.css" />
+<!--[if lte IE 9]>
+<link rel="stylesheet" href="__PUBLIC__/dist/css/ace-ie.min.css" />
+<![endif]-->
+<script src="__PUBLIC__/dist/js/ace-extra.min.js"></script>
+<!--[if lte IE 8]>
+<script src="__PUBLIC__/dist/js/html5shiv/dist/html5shiv.min.js"></script>
+<script src="__PUBLIC__/dist/js/respond/respond.min.js"></script>
+<![endif]-->
+
+<!--[if !IE]> -->
+<script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="__PUBLIC__/dist/css/style.css" />
+<script src="__PUBLIC__/dist/js/common.js?v=<?php echo time().mt_rand(1,1111); ?>"></script>
+
+<script type="text/javascript">
+	if('ontouchstart' in document.documentElement) document.write("<script src='__PUBLIC__/dist/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="__PUBLIC__/dist/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/dist/js/ace-elements.min.js"></script>
+<script src="__PUBLIC__/dist/js/ace.min.js"></script>
+<script src="__PUBLIC__/dist/js/bootbox.js"></script>
+</head>
+<body class="no-skin">
+<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+		<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+			<span class="sr-only">Toggle sidebar</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+
+		<div class="navbar-header pull-left">
+			<a class="logoimg"><img src="__PUBLIC__/img/logo.png" title="SI溯源平台"/></a>
+		</div>
+
+		<div class="navbar-buttons navbar-header pull-right" role="navigation">
+			<ul class="nav ace-nav">
+				<li class="light-blue dropdown-modal">
+					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="__PUBLIC__/dist/avatars/avatar5.png" alt="管理员" />
+						<span class="user-info"><small>欢迎您，</small>陈Sir</span>
+						<i class="ace-icon fa fa-caret-down"></i>
+					</a>
+
+					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+						<li><a href="#"><i class="ace-icon fa fa-cog"></i>设置</a></li>
+						<li><a href="#"><i class="ace-icon fa fa-user"></i>个人</a></li>
+						<li class="divider"></li>
+						<li><a href="javascript:;" id="logout"><i class="ace-icon fa fa-power-off"></i>退出</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="main-container ace-save-state" id="main-container">
+    <div id="sidebar" class="sidebar responsive ace-save-state sidebar-fixed">
+
+        <script type="text/javascript">
+                try{ace.settings.loadState('sidebar')}catch(e){}
+        </script>
+
+        {:widget('Sider/sider')}
+        <!-- #section:basics/sidebar.layout.minimize -->
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+        <!-- /section:basics/sidebar.layout.minimize -->
+
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            
+            
+                <!--导航条-->          
+              <div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+                      <ul class="breadcrumb" id='leaders'>
+                              <li><i class=""></i><a href="#">首页</a></li>
+                              <li><a href="#">活动中心</a></li>
+                              <li class="active">活动管理</li>
+                      </ul>
+              </div>
+  
+            <block name="body">主内容</block>
+        </div>
+    </div>
+    <block name='script'></block>
+    {:widget('Sider/footer')}
+</div>
+</body>
+</html>

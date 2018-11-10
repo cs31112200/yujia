@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="__PUBLIC__/newlogin/css/reset.css">
+    <link rel="stylesheet" href="__PUBLIC__/newlogin/css/login.css">
+    <script src="__PUBLIC__/static/js/jquery.min.js" charset="utf-8"></script>
+<script src="__PUBLIC__/layui/layui.js"></script>
+<script src="__PUBLIC__/static/js/common.js?v=<?php echo mt_rand(1,10000000);?>" charset="utf-8"></script>
+<script src="__PUBLIC__/fancybox/jquery.fancybox.js" charset="utf-8"></script>
+ <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+ 
+</head>
+<style>
+ html{
+  background:url("__PUBLIC__/static/image/bg.png") no-repeat;
+  background-size: 100%;
+}   
+    </style>
+<body >
+    <div class="login-wrap">
+        <!-- LOGO -->
+        <div class="login-hd">
+            <img class="login-logo" src="__PUBLIC__/static/image/logo.png" alt="" title="">
+        </div>
+        
+        <!-- BODY -->
+        <div class="login-bd clearfix">
+            <div class="login-cover">
+                <img src="__PUBLIC__/static/image/dn.png" alt="" title="">
+            </div>
+            
+            <!-- MAIN -->
+            <div class="login-main" style="border-top-right-radius: 15px;border-bottom-right-radius: 15px;">
+                <form class="form-horizontal"  method="post" action="{:url('checkLogin')}">
+                    <div class="main-top">
+                        <span class="fn-fl">登录</span>
+                        <!--
+                        <span class="fn-fr" style="font-size:14px;">
+                            没有账号？<a href="{:url('apply')}" title="">立即申请></a>
+                        </span>-->
+                    </div>
+
+                    <div class="main-body">
+                        <div class="input-item">
+                            <label for="phone">
+                                <img src="__PUBLIC__/newlogin/img/account.png">
+                            </label>
+                            <input type="text" name="account" value="" placeholder="请输入帐号">
+                        </div>
+                        <div class="input-item">
+                            <label for="psd">
+                                <img src="__PUBLIC__/newlogin/img/password.png">
+                            </label>
+                            <input type="password" name="password" value="" placeholder="请输入密码">
+                        </div>
+                        <div class="remind-pw">
+                            <!--<div class="remind-wrap">
+                                <input type="checkbox" name="remind">
+                                <label>记住账号</label>
+                            </div>-->
+                           <!-- <a href="" title="">忘记密码？</a>-->
+                        </div>
+                        <a class="login-btn  ajax-post"  target-form="form-horizontal" href="javascript:;">登 录</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

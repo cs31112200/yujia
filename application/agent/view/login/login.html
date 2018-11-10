@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>渔佳-代理中心</title>
+    <script src="__PUBLIC__/dist/agent/js/flexible.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/css/reset.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/css/global.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/font/iconfont.css">
+    
+<script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+<script src="__PUBLIC__/dist/js/common.js?v=<?php echo time().mt_rand(1,1111); ?>"></script>
+<script src="__PUBLIC__/dist/js/fancybox/jquery.fancybox.js"></script>
+</head>
+<body>
+    <style>
+        html {
+            height: 100%;
+            background: url(__PUBLIC__/dist/agent/img/login_bg.png) 0 bottom no-repeat #fff;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+    </style>
+    <div class="login-logo">
+        <img src="__PUBLIC__/dist/agent/img/login_logo.png">
+    </div>
+    
+    <form class='form-horizontal' action="{:url('to_login')}" method='post'>
+        <div class="login-input">
+            <label for="phone" class="iconfont icon-iconfuzhi"></label>
+            <input type="text" name="phone" value="" placeholder="请输入账号">
+        </div>
+        <div class="login-input">
+            <label for="psd" class="iconfont icon-mima"></label>
+            <input type="password" name="psd" value="" placeholder="请输入密码">
+        </div>
+        <button type='button'  class="login-btn ajax-post" target-form="form-horizontal" >登录</button>
+    </form>
+    <div class="login-tip">马上申请成为<a href="{:url('/Agent/apply')}" style="color:#679af7;">代理》</a></div>
+</body>
+<script>
+    
+</script>
+</html>

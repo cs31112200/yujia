@@ -1,0 +1,140 @@
+<extend name="base/base" />
+
+<block name="body">
+
+    <div class="page-content">
+        <div class="page-header"><h1>采集器列表</h1></div>
+
+        <div class="row">
+            <form class="form-horizontal" action=" {:url('add_equip_collector')}" validatable="true" name="form1" id="form1" method="post">
+                <div class="search-form col-xs-12">
+                    <div class="searchDiv">
+                        <ul class="clearfix">
+                            <input type='hidden' name='member_id' value="{:input('member_id')}">
+                            <input type='hidden' name='equip_id' value="{:input('equip_id')}">
+                            <li class='col-xs-3'>
+                                <?php echo model('Ui')-> getDbSelectNorList('CollectorType',[],'id','name','type_id','请选择采集器'); ?>
+                            </li>
+                            <li class="col-xs-3"><input type="text" name="install_fee" id="account" value="" maxlength="" placeholder="安装费" class="col-xs-12" /></li>
+                            <li class="col-xs-3"><a class="btn btn-white ajax-post" href="javascript:;" target-form="form-horizontal"> <i class="fa fa-check-square-o"></i> 提交 </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+
+            <div class="col-xs-12">
+                <table cellpadding="0" class="table table-striped table-bordered table-hover" id="data_table">
+                    <thead>
+                    <tr>
+                        <th class="center">
+                            <label class="pos-rel">
+                                <input type="checkbox" class="check-all">
+                                <span class="lbl"></span>
+                            </label>
+                        </th>
+                        <th>编号</th>
+                        <th>采集器</th>
+                        <th>别称</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <notempty name='_list'>
+                        <volist name="_list" id="at">
+                            <tr>
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ids"  name="id[]" value="{$at.id|default=''}" >
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                                <td>{$at.number}</td>
+                                <td>{$at.name}</td>
+                                <td>{$at.other_name}</td>
+                                {$at.status==1?"<td style='color:#629B58;'>启用</td>":"<td style='color:#D15B47;'>禁用</td>"}
+                                <td>
+                                    <?php if($at['status']==1){ ?>
+                                    <a href="{:url('Member/change_ec_tatus?action=close&&id='.$at['id'])}" class="btn btn-xs btn-info ajax-get confirm"><i class="fa fa-trash-o"></i> 禁用</a>
+                                    <?php }else{?>
+                                    <a href="{:url('Member/change_ec_tatus?action=open&id='.$at['id'])}" class="btn btn-xs btn-info ajax-get confirm"><i class="fa fa-trash-o"></i> 启用</a>
+                                    <?php }?>
+                                </td>
+                            </tr>
+                        </volist>
+                        <else/>
+                        <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+                    </notempty>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-xs-12">
+                <a  class="layui-btn layui-btn-primary" href="#" onclick="javascript:history.go(-1);"><i class='iconfont '>&#xe697;</i>返回列表</a>
+            </div>
+            <div class="col-xs-12">
+                <div class="pull-right">
+                    {$_page|default=''}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</block>
+<block name='script'>
+
+    <link href="__PUBLIC__/dist/js/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/dist/js/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__PUBLIC__/dist/js/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/dist/js/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script>
+
+
+        $(function(){
+            //高亮显示
+            highlight_subnav('menu_member_list','menu_member');
+
+        })
+    </script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-fonts.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-part2.min.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/js/fancybox/jquery.fancybox.css" />
+    <block name="css_style"></block>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-ie.min.css" />
+    <![endif]-->
+    <script src="__PUBLIC__/dist/js/ace-extra.min.js"></script>
+    <!--[if lte IE 8]>
+    <script src="__PUBLIC__/dist/js/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="__PUBLIC__/dist/js/respond/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if !IE]> -->
+    <script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/style.css" />
+
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='__PUBLIC__/dist/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+    </script>
+    <script src="__PUBLIC__/dist/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/dist/js/ace-elements.min.js"></script>
+    <script src="__PUBLIC__/dist/js/ace.min.js"></script>
+    <script src="__PUBLIC__/dist/js/bootbox.js"></script>
+    <script src="__PUBLIC__/dist/js/fancybox/jquery.fancybox.js"></script>
+
+
+</block>

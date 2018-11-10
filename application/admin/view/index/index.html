@@ -1,0 +1,298 @@
+<extend name="base/base" />
+<block name="mystyle">
+    <style>
+ .iconfonts, .iconfont, .layui-icon{
+    color:white !important;
+ }
+ .layui-colla-title .layui-icon{
+    color:black !important;
+ }
+ </style>
+</block>
+<block name="body">
+    <!-- 内容主体区域 -->
+    <div class="layui-row layui-col-space30">
+        
+        <div class="layui-col-md12"  style="padding:50px;">
+        
+	<div class="panel_box myrow">
+		<div class="panel col">
+			<a href="javascript:;" data-url="page/message/message.html">
+				<div class="panel_icon">
+					<i class="layui-icon" style="font-size:32px;">&#xe63a;</i>
+				</div>
+				<div class="panel_word ">
+					<span>1</span>
+					<cite>总后台用户</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="page/user/allUsers.html">
+				<div class="panel_icon" style="background-color:#FF5722;">
+					<i class="iconfonts " style="font-size:32px;">&#xe60b;</i>
+				</div>
+				<div class="panel_word ">
+					<span>2200,000</span>
+					<cite>总金额</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="page/user/allUsers.html">
+				<div class="panel_icon" style="background-color:#009688;">
+					<i class="layui-icon"  style="font-size:32px;">&#xe613;</i>
+				</div>
+				<div class="panel_word ">
+					<span>333</span>
+					<cite>用户总数</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="page/img/images.html">
+				<div class="panel_icon" style="background-color:#5FB878;">
+					<i class="layui-icon"  style="font-size:32px;">&#xe64a;</i>
+				</div>
+				<div class="panel_word ">
+					<span>44</span>
+					<cite>图片总数</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="page/news/newsList.html">
+				<div class="panel_icon" style="background-color:#F7B824;">
+					<i class="iconfonts "  style="font-size:32px;">&#xe504;</i>
+				</div>
+				<div class="panel_word ">
+					<span>55</span>
+					<cite>总订单数</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col max_panel">
+			<a href="javascript:;" data-url="page/news/newsList.html">
+				<div class="panel_icon" style="background-color:#2F4056;">
+					<i class="iconfonts "  style="font-size:32px;">&#xe608;</i>
+				</div>
+				<div class="panel_word">
+					<span>66</span>
+					<cite>总支出</cite>
+				</div>
+			</a>
+		</div>
+	</div>
+
+        
+        
+        </div>
+        
+        <div class="layui-col-md5" style="margin-left:30px;">
+                    <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                       <h2 class="layui-colla-title">数据统计2</h2>
+                       <div class="layui-colla-content layui-show">
+            <div id="main" class="lay-col-md12" style="height:350px;"></div>
+                       </div>
+                       </div>
+                       </div>
+        </div>
+        
+        <div class="layui-col-md5 " style="margin-left:30px;">
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                       <h2 class="layui-colla-title">数据统计2</h2>
+                       <div class="layui-colla-content layui-show">
+                            <div id="bing" class="lay-col-md12" style="height:350px;">
+                            </div>
+        
+                       </div>
+                       </div>
+                       </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="layui-col-md12" style="diaply:none;">
+          <!--  <div id="china" class="lay-col-md12" style="height:700px;"></div>-->
+        </div>
+        
+    </div>
+</block>
+<block name='script'>
+<script src="__PUBLIC__/static/js/echarts.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '柱状图'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: ["测试","测试","测试","测试","测试","测试"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+<script>
+        var myChart = echarts.init(document.getElementById('bing'));    
+option = {
+    title : {
+        text: '饼图',
+        subtext: '纯属虚构',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['测试1','测试2','测试3','测试4','测试5']
+    },
+    series : [
+        {
+            name: '饼图',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:335, name:'测试1'},
+                {value:310, name:'测试2'},
+                {value:234, name:'测试3'},
+                {value:135, name:'测试4'},
+                {value:1548, name:'测试5'}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+};
+    
+        myChart.setOption(option);
+    
+</script>    
+<!--
+<script src="__PUBLIC__/static/js/gl.js" charset="utf-8"></script>
+    <script>
+ var myChart = echarts.init(document.getElementById('china'));    
+var data = [
+     {name: '厦门', value: 9},
+];
+var geoCoordMap = {
+    '厦门':[121.15,31.89],
+};
+var convertData = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name];
+        if (geoCoord) {
+            res.push({
+                name: data[i].name,
+                value: geoCoord.concat(data[i].value)
+            });
+        }
+    }
+    return res;
+};
+
+    myChart.setOption(option = {
+        title : {
+            text: '微博签到数据点亮中国',
+            subtext: 'From ThinkGIS',
+            sublink: 'http://www.thinkgis.cn/public/sina',
+            left: 'center',
+            top: 'top',
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        tooltip: {},
+        legend: {
+            left: 'left',
+            data: ['强', '中', '弱'],
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        geo: {
+            map: 'china',
+            roam: true,
+            label: {
+                emphasis: {
+                    show: false
+                }
+            },
+            itemStyle: {
+                normal: {
+                    areaColor: '#323c48',
+                    borderColor: '#111'
+                },
+                emphasis: {
+                    areaColor: '#2a333d'
+                }
+            }
+        },
+        series: [{
+            name: '弱',
+            type: 'scatterGL',
+            coordinateSystem: 'geo',
+            symbolSize: 1,
+            itemStyle: {
+                shadowBlur: 2,
+                shadowColor: 'rgba(37, 140, 249, 0.8)',
+                color: 'rgba(37, 140, 249, 0.8)'
+            },
+            data: convertData(data)
+        }, {
+            name: '中',
+            type: 'scatterGL',
+            coordinateSystem: 'geo',
+            symbolSize: 1,
+            itemStyle: {
+                shadowBlur: 2,
+                shadowColor: 'rgba(14, 241, 242, 0.8)',
+                color: 'rgba(14, 241, 242, 0.8)'
+            },
+            data: convertData(data)
+        }, {
+            name: '强',
+            type: 'scatterGL',
+            coordinateSystem: 'geo',
+            symbolSize: 1,
+            itemStyle: {
+                shadowBlur: 2,
+                shadowColor: 'rgba(255, 255, 255, 0.8)',
+                color: 'rgba(255, 255, 255, 0.8)'
+            },
+            data:convertData(data)
+        }]
+    });
+      </script>
+-->
+</block>

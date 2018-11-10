@@ -1,0 +1,65 @@
+<extend name="base/base" />
+<block name="css_style">
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css"/>
+    <style type="text/css">
+         .title{
+            font: 13px 'Microsoft Yahei';
+            color: #09f
+        }
+        #mapContainer {position:relative !important;}
+    </style>
+    
+</block>
+<block name="body">
+
+<div class="page-content">
+    <div class="page-header"><h1>设备分布</h1></div>
+    <div id="mapContainer" class="col-sm-12" style="min-height:600px;"></div>    
+</div>
+
+</block>
+<block name='script'>
+        
+<link href="__PUBLIC__/dist/js/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/dist/js/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/dist/js/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/dist/js/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.0&key={$gd_config.web_key}"></script>
+
+<script>
+    
+
+$(function(){
+    //高亮显示    
+    highlight_subnav('menu_equip_sale','menu_sheet');
+
+})
+</script>
+<script type="text/javascript">
+    //初始化地图对象，加载地图
+    var tableid ="<?php echo $gd_config['tableid']; ?>";
+    var map = new AMap.Map("mapContainer", {
+            resizeEnable: true,
+            center: [117.653576, 24.52419],//地图中心点
+            zoom: 9 //地图显示的缩放级别
+    });
+    //叠加云数据图层
+    function addCloudLayer() {
+        //加载云图层插件
+        map.plugin('AMap.CloudDataLayer', function() {
+            var layerOptions = {
+              //  query: {keywords: '公园'},
+             //   clickable: true
+            };
+            var cloudDataLayer = new AMap.CloudDataLayer(tableid, layerOptions); //实例化云图层类
+			console.log(cloudDataLayer);
+            cloudDataLayer.setMap(map); //叠加云图层到地图
+
+
+        });
+    }
+    addCloudLayer();
+
+</script>
+ <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+</block>

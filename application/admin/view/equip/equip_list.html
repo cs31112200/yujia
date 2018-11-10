@@ -1,0 +1,226 @@
+R<extend name="base/base" />
+<block name="mystyle">
+    <link rel="stylesheet" href="__PUBLIC__/fancybox/jquery.fancybox.css">
+    <style>
+        .layui-form-switch{width:55px !important;}
+        .layui-table-cell {
+            height:75px !important;
+            /*width:150px !important;*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</block>
+<block name="body">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>设备列表</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane search-form" action="{:url()}" method="post" >
+        <div class="searchDiv layui-row layui-col-space10">
+
+
+            <div class="layui-col-md3">
+                <div class="layui-form-item" >
+                    <label class="layui-form-label" pane>状态</label>
+                    <div class="layui-input-block">
+                        <?php  $status =isset($_GET['status'])?$_GET['status']:-1; echo model('Ui')->getModelNorSelectList('Equipment','getStatusToSelect','状态','status','',$status); ?>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-col-md3">
+                <div class="layui-form-item" >
+                    <label class="layui-form-label" pane>设备类型</label>
+                    <div class="layui-input-block">
+                        <?php   $theids =isset($_GET['type'])?$_GET['type']:0; echo (model('Ui')->getDbSelectNorList('equipment_type',['status'=>1],'id','type_name','type','设备类型','',$theids)); ?>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-col-md3">
+                <div class="layui-form-item" >
+                    <label class="layui-form-label" pane>设备编码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="equip_code"    placeholder="请输入设备编码" style="min-width:200px;" autocomplete="off" class="layui-input" value="{:input('equip_code','')}">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-col-md3">
+                <div class="layui-form-item" >
+                    <label class="layui-form-label" pane>批次号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="batch_id"    placeholder="请输入批次号" style="min-width:200px;" autocomplete="off" class="layui-input" value="{:input('batch_id','')}">
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="layui-col-md3">
+                <div class="layui-form-item" >
+                    <div class="">
+                        <a class="layui-btn " id='search'   url="{:url('equip_list')}" lay-filter="myform"  target-form="layui-form"><i class='iconfonts'>&#xe63d;</i>搜索</a>
+                        <a  class="layui-btn layui-btn-primary" href="{:url('equip_list')}"><i class='iconfonts'>&#xe662;</i>重置</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+    <div class='layui-row layui-col-space10' style='padding:12px 15px;'>
+        <!--<a href="{:url('equip_add')}" class='layui-btn'><i class="iconfont">&#xe6b9;</i>新增类型</a>-->
+        <!--<a  ope="open" model="Equipment" url="{:url('equip_change_status')}"  onclick="change_status($(this));" class='layui-btn layui-btn-normal'><i class="iconfont">&#xe901;</i>启用</a>-->
+        <!--<a  ope="close" model="Equipment" url="{:url('equip_change_status')}"  onclick="change_status($(this));" class='layui-btn layui-btn-danger'><i class="iconfont">&#xe69a;</i>禁用</a>-->
+        <!--<a  class='layui-btn layui-btn-danger' ope="delete" model="Equipment" url="{:url('equip_change_status')}"  onclick="change_status($(this));"><i class="layui-icon">&#xe640;</i>删除选中</a>-->
+        <a href="{:url('equip_add')}" class="layui-btn layui-btn-normal"> <i class="fa fa-plus"></i> 设备录入</a>
+        <a href="{:url('batch_add')}" class="layui-btn layui-btn-normal"> <i class="fa fa-external-link-square"></i> 批量录入</a>
+        <a href="{:url('to_agent')}" class="layui-btn layui-btn-normal"> <i class="fa fa-gavel"></i> 下发代理</a>
+        <a  class='layui-btn layui-btn-danger' ope="delete" model="Equipment" url="{:url('equip_change_status')}"  onclick="change_status($(this));"><i class="layui-icon">&#xe640;</i>删除选中</a>
+    </div>
+    <table class="layui-table" lay-data="{height:'full', url:'/Equip/getEquipList/',done:test,page:true,limit:10,size:'lg',id:'tabletest'}" lay-filter='thetable' >
+        <thead>
+        <tr>
+            <th lay-data="{checkbox:true}"></th>
+            <th lay-data="{field:'id', width:50}">id</th>
+            <th lay-data="{field:'batch_id', width:100}">批次号</th>
+            <th lay-data="{field:'card_num', width:110}">卡号</th>
+            <th lay-data="{field:'equip_code', width:110}">设备编码</th>
+            <th lay-data="{field:'type_name', width:60}">设备类型</th>
+            <th lay-data="{field:'qrcode', width:175}">设备二维码</th>
+            <th lay-data="{field:'qrcode_pic', width:155,templet: '#qrcode_picTpl'}">二维码图片</th>
+            <th lay-data="{field:'purchase_fee', width:70}">设备进价</th>
+            <th lay-data="{field:'fee', width:70}">设备售价</th>
+            <th lay-data="{field:'agent_fee', width:70}">代理价格</th>
+            <th lay-data="{field:'status_name', width:75,templet: '#statusTpl'}">状态</th>
+            <th lay-data="{field:'create_time', width:150}">创建时间</th>
+            <th lay-data="{width:365,toolbar:'#opebar'}">操作</th>
+
+        </tr>
+        </thead>
+    </table>
+
+
+
+</block>
+<block name='script'>
+
+    <script type="text/html" id="opebar">
+        <a class="layui-btn layui-btn-small" lay-event="edit" style='text-align:center;'><i class='iconfont'>&#xe910;</i>编辑</a>
+        {{#  if(d.status != '2'){ }}
+        <a class="layui-btn  layui-btn-small one_del" ope="delete" model="Equipment" url="{:url('equip_change_status')}" lay-event="del" style='text-align:center;'><i class="layui-icon">&#xe640;</i>删除</a>
+        {{#  } else { }}
+        {{#  } }}
+        <a class="layui-btn  layui-btn-small layui-btn-danger bf" ope="bf" model="Equipment" url="{:url('equip_change_status')}" lay-event="sq" style='text-align:center;'><i class="fa fa-ban"></i>报废</a>
+        <a class="layui-btn layui-btn-small" lay-event="print" style='text-align:center;'><i class='iconfont'>&#xe910;</i>打印</a>
+    </script>
+    <script type="text/html" id="statusTpl">
+        <i class="iconfont" style="color: {{d.status_color}}">{{d.status_name}}</i>
+    </script>
+    <script type="text/html" id="qrcode_picTpl">
+        <a class="fancybox-piclayer" href="{{d.qrcode_pic}}"><img src="{{d.qrcode_pic}}"   style="width:100%;height:100%;"></a>
+    </script>
+    <script src="__PUBLIC__/fancybox/jquery.fancybox.js" charset="utf-8"></script>
+    <script>
+        var thechoose="";
+        layui.use('table', function(){
+            var  table = layui.table;
+            table.on('tool(thetable)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+                var ondel=tr.find(".one_del");
+                var bf=tr.find(".bf");
+                if(layEvent === 'edit'){
+                    window.location.href="equip_add?id="+data.id;
+                }else if(layEvent === 'print'){
+                    window.location.href="print_QRcode?id="+data.id;
+                } else if(layEvent === 'sq'){
+                    thechoose=data.id;
+                    change_status(bf);
+                }else if(layEvent === 'del'){ //删除
+                    thechoose=data.id;
+                    change_status(ondel);
+                }
+            });
+
+
+            /*****多选******/
+            table.on('checkbox(thetable)', function(obj){
+                var checkStatus = table.checkStatus('tabletest'); //test即为基础参数id对应的值
+                var thedata =checkStatus.data;
+                var newarr =new Array();
+                if(thedata.length>0){
+
+                    for(i=0;i<thedata.length;i++){
+                        newarr[i]=thedata[i].id;
+                    }
+                    thechoose =newarr.join(',');
+                }else{
+                    thechoose="";
+                }
+            });
+        });
+        //搜索功能
+        $("#search").click(function(){
+            var url = $(this).attr('url');
+            var query  = $('.search-form').find('input,select').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+            query = query.replace(/^&/g,'');
+            if( url.indexOf('?')>0 ){
+                url += '&' + query;
+            }else{
+                url += '?' + query;
+            }
+            console.log(url);
+            window.location.href = url;
+        });
+
+
+    </script>
+    <script>
+        layui.use('form', function(){
+            var form = layui.form;
+            form.on('switch(status)', function(data){
+                console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //开关是否开启，true或者false
+                console.log(data.value); //开关value值，也可以通过data.elem.value得到
+                console.log(data.othis.prev().attr('ope')); //得到美化后的DOM对象
+                var one_change=data.othis.prev();
+                thechoose=data.value;
+                change_status(one_change);
+            });
+        });
+    </script>
+    <script>
+        //    $(document).ready(function() {
+        //高亮显示
+        highlight_subnav('menu_client','menu_font_list');
+        //        var upload_url="http://admin.centerwl.com/upload/kjuploadfile.html";
+        //        var is_disable ="0";
+        //        doUploadFile('file_upload','down_url',upload_url,is_disable,'fileQueue','200MB','*.apk;*.jpg');
+        //    });
+        function test(){
+            $(".fancybox-piclayer").fancybox({
+                openEffect  : 'none',
+                closeEffect	: 'none',
+                helpers : {
+                    title : {
+                        type : 'over'
+                    }
+                }
+            });
+        }
+    </script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/font-awesome/css/font-awesome.min.css" />
+
+</block>

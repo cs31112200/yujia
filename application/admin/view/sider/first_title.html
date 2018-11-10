@@ -1,0 +1,43 @@
+<notempty name="$menu">
+    <volist name='menu' id='vo'>
+<ul class="layui-nav layui-layout-left">
+<notempty name="$fmenu">
+    <volist name='fmenu' id='vo' >
+      <?php if($i<=8){ ?>
+            <li class="layui-nav-item fmenu threemenu" id="{$vo.id_name}" theid='{$vo.id}'><a href="#">{$vo.name}</a></li>
+      <?php }?>
+</volist>
+</notempty>
+<?php if(count($fmenu)>8){?> 
+       <li class="layui-nav-item othermenu">
+            <a href="javascript:;"><span id="menu_the_other_name">其它系统</span></a>
+            <dl class="layui-nav-child">    
+            <volist name='fmenu' id='vo'>
+                 <?php if($i>8){ ?>
+                <dd><a href="#" class="fmenu" id="{$vo.id_name}" theid="{$vo.id}">{$vo.name}</a></dd>
+                <?php }?>
+            </volist>
+            </dl>
+      </li>
+<?php }?>      
+</ul>
+<script>
+$(".layui-nav-child").find('a').click(function(){
+    $(this).parent().parent().parent().addClass('layui-this');
+    $(this).parent().parent().parent().addClass('layuis-this');
+    $("#menu_the_other_name").html($(this).html());
+    
+})
+$(".threemenu").click(function(){
+    $(".othermenu").removeClass('layuis-this');
+    $("#menu_the_other_name").html('其他系统');
+})
+
+
+$(".fmenu").click(function(){
+    var id =$(this).attr('id');
+    $(".menu_switch").hide();
+    $("#se_"+id).show();
+})    
+</script>
+        

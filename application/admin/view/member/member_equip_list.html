@@ -1,0 +1,250 @@
+<extend name="base/base" />
+<block name="body">
+
+<div class="page-content">
+    <div class="page-header" style='color:#4C8FBD;'><h3>{$username|default=''}的设备列表</h3></div>
+    
+        <div class="col-xs-12" style="padding:15px;">
+            
+            <a href="{:url('/Member/equip_up',['member_id'=>input('id'),'equip_id'=>$detail['equip_id']])}" class="btn btn-sm btn-primary"> <i class="fa fa-bolt"></i> 套餐升级</a>
+            <a href="{:url('/Member/collector_list',['member_id'=>input('id'),'equip_id'=>$detail['equip_id']])}" class="btn btn-sm btn-primary"> <i class="fa fa-cogs"></i> 采集器管理</a>
+          <div class="pull-right">
+
+            </div>
+        </div>
+    
+
+
+    <div class="row">
+          
+        <div class="col-xs-12">
+       <notempty name='elist'>
+            <div class="tabbable">
+                <ul class="nav nav-tabs" id="myTab">
+                    <volist name="elist" id="vo">
+                        <li class="{$vo.is_active}">
+                            <a  href="{:url('member_equip_list?id='.input('id').'&equip_id='.$vo['equip_id'])}"><i class="green ace-icon fa fa-cogs bigger-120"></i>{$vo.name}</a>
+                        </li>
+                    </volist>
+                </ul>
+
+                <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                            
+                            <div class="searchDiv" style="min-height: 250px;">
+                                <div  class="col-xs-12" style="border-bottom: 1px dashed #000; margin-bottom: 20px; line-height: 35px;  color:green;" >基本信息</div>
+                                <ul class="clearfix">
+                                    <li class="col-xs-2"><span style='color:#4C8FBD'>设备名称：</span>{$detail.name}</li>
+                                    <li class="col-xs-2"><span style='color:#4C8FBD'>设备编码：</span>{$detail.equip_code}</li>
+                                    <li class="col-xs-2"><span style='color:#4C8FBD'>水池名称：</span>{$detail.water_name}</li>
+                                    <li class="col-xs-2"><span style='color:#4C8FBD'>首选报警电话：</span>{$detail.warm_phone}</li>
+                                    <li class="col-xs-2"><span style='color:#4C8FBD'>备选报警电话：</span>{$detail.spare_phone}</li>
+                                    <li class="col-xs-2"><span style='color:#4C8FBD'>当前电流：</span>{$detail.electric} A</li>
+                                    <li class="col-xs-2"><span style='color:#4C8FBD'>控制数：</span>{$detail.init_count} 个</li>
+                                    <li class="col-xs-2"><span style='color:#4C8FBD'>联网状态：</span>{$detail.connect_status==1?"正常":"<b style='color:red;'>断网</b>"}</li>
+                                </ul>
+                                <div  class="col-xs-12" style="border-bottom: 1px dashed #000; margin-bottom: 20px; line-height: 35px;  color:green;" >设备通道</div>
+                                <ul class="clearfix">
+                                    <notempty name='vo.pip_list'>
+                                    <volist name='vo.pip_list' id='vo1'>
+                                     <li class="col-xs-2">通道{$vo1.num}({$vo1.name}):{$vo1.status?'开':'关';}</li>
+                                    </volist>
+                                        <else/>
+                                         <li class="col-xs-12" style='text-align: center;'>暂无通道</li>
+                                    </notempty>
+                                </ul>
+                                <div  class="col-xs-12" style="border-bottom: 1px dashed #000; margin-bottom: 20px; line-height: 35px;  color:green;" >图表</div>
+                                <ul class="clearfix">
+                                    <li class="col-xs-12"><div id="mymain"  style="width:100%;height:400px;"></div></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+           <else/>
+           暂无设备
+       </notempty>
+    </div>
+        <div class="col-xs-12" style='margin-top:20px;'>
+            <a class="layui-btn goback" href="{:url('member_list')}"><i class="fa fa-reply"></i>返 回</a>
+        </div>
+    <!--    <div class="col-xs-12">
+            <div class="searchDiv" style="min-height: 250px;">
+                <div  class="col-xs-12" style="border-bottom: 1px dashed #000; margin-bottom: 20px; line-height: 35px;  color:#4C8FBD;" >基本信息(设备联网状态:正常)</div>
+                <ul class="clearfix">
+                    <li class="col-xs-2">设备名称:</li>
+                    <li class="col-xs-2">设备编码:</li>
+                    <li class="col-xs-2">水池名称:</li>
+                    <li class="col-xs-2">首选报警电话:</li>
+                    <li class="col-xs-2">备选报警电话:</li>
+                    <li class="col-xs-2">当前电流:</li>
+                </ul>
+                <div  class="col-xs-12" style="border-bottom: 1px dashed #000; margin-bottom: 20px; line-height: 35px;  color:#4C8FBD;" >设备通道（已打开）</div>
+                <ul class="clearfix">
+                    <li class="col-xs-2">通道1:</li>
+                    <li class="col-xs-2">通道1:</li>
+                    <li class="col-xs-2">通道1:</li>
+                    <li class="col-xs-2">通道1:</li>
+                    <li class="col-xs-2">通道1:</li>
+                    <li class="col-xs-2">通道1:</li>
+                </ul>
+                <div  class="col-xs-12" style="border-bottom: 1px dashed #000; margin-bottom: 20px; line-height: 35px;  color:#4C8FBD;" >图表</div>
+                <ul class="clearfix">
+                    <li class="col-xs-12"><div id="mymain"  style="width:100%;height:400px;"></div></li>
+                </ul>
+            </div>
+        </div>  -->  
+
+
+
+
+    </div>
+</div>
+</block>
+<block name='script'>
+        
+<link href="__PUBLIC__/dist/js/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/dist/js/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/dist/js/echarts/echarts-common.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/dist/js/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/dist/js/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script>
+    
+
+$(function(){
+    //高亮显示    
+    highlight_subnav('menu_member_list','menu_member');
+
+})
+</script>
+  
+    <script type="text/javascript">
+        var the_x ="{$x}";
+        var the_y ="{$y}";
+        the_x  =the_x.split(',');
+        the_y  =the_y.split(',');
+        
+		thearr = new Array();
+		for(i=0;i<48;i++){
+			hour =i*0.5;
+			thearr[i]=hour+"h";
+		};
+		
+		thearr2 = new Array();
+		for(i=0;i<48;i++){
+			thearr2[i]=Math.random()+0.1;
+		};
+		//test2 =JSON.stringify(thearr2);
+		console.log(thearr2);
+		
+		
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('mymain'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '电流图表'
+            },
+            tooltip: {
+                type: 'showTip',
+
+                axisPointer: {
+                    animation: false
+                }
+            },
+            legend: {
+                data:['实时电流']
+            },
+            xAxis: {
+		name:'时间',
+                data: the_x,
+                splitNumber:24,
+                axisLable:{
+                    formatter: function (value, index) {
+                        // 格式化成月/日，只在第一个刻度显示年份
+                        if(value%1!==0){
+                            return "";
+                        }else{
+                            return value;
+                        }
+                    } 
+                }
+            },
+            yAxis: {
+		name:'电流',
+                boundaryGap: [0, '100%'],
+                splitLine: {
+                    show: false
+                },
+            },
+            series: [{
+                name: '当前电流',
+                type: 'line',
+                symbol:'circle',
+                showAllSymbol:true,
+                showSymbol: true,
+          //      hoverAnimation: false,
+                data: the_y
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+		
+//setInterval(function () {
+//
+//    for (var i = 0; i < 5; i++) {
+//        //data.shift();
+//        thearr2.push(Math.random()+5);
+//    }
+//
+//    myChart.setOption({
+//        series: [{
+//            data: thearr2
+//        }]
+//    });
+//}, 1000);
+		
+    </script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-fonts.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-part2.min.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/dist/js/fancybox/jquery.fancybox.css" />
+    <block name="css_style"></block>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/ace-ie.min.css" />
+    <![endif]-->
+    <script src="__PUBLIC__/dist/js/ace-extra.min.js"></script>
+    <!--[if lte IE 8]>
+    <script src="__PUBLIC__/dist/js/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="__PUBLIC__/dist/js/respond/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if !IE]> -->
+    <script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/style.css" />
+
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='__PUBLIC__/dist/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+    </script>
+    <script src="__PUBLIC__/dist/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/dist/js/ace-elements.min.js"></script>
+    <script src="__PUBLIC__/dist/js/ace.min.js"></script>
+    <script src="__PUBLIC__/dist/js/bootbox.js"></script>
+    <script src="__PUBLIC__/dist/js/fancybox/jquery.fancybox.js"></script>
+</block>

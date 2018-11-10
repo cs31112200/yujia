@@ -1,0 +1,191 @@
+<extend name="base/base" />
+<block name="mystyle">
+    <style>
+/* 访问授权页面 大类区块 */
+.checkmod {
+    border-color: #ebebeb;
+}
+.checkmod dt {
+    border-bottom-color: #ebebeb;
+    background-color: #ECECEC;
+}
+/* 授权编辑页 */
+.checkmod {
+    margin-bottom: 20px;
+    border: 1px solid #ebebeb;
+}
+.checkmod dt {
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    border-bottom: 1px solid #ebebeb;
+    background-color: #ECECEC;
+}
+.checkmod dd {
+    padding-left: 10px;
+    line-height: 30px;
+}
+.checkmod dd .divsion {
+    margin-right: 20px;
+}
+.checkmod dd .checkbox {
+    margin: 0 10px 0 0;
+}
+.checkmod dd .divsion {
+    margin-right: 20px;
+}   
+.checkboxs input, .radio input {
+    margin-right: 5px;
+    vertical-align: -1px;
+}
+        </style>
+</block>
+<block name="body">
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>{$gl.name}的分组访问授权</legend>
+</fieldset>
+    
+
+<form class="form-horizontal" action=" {:url('menu_group')}" validatable="true" name="form1" id="form1" method="post" style="margin-left:30px;">
+
+
+    <volist name='_list' id='vo'>
+        <dl class="checkmod">
+                <dt class="hd">
+                        <label class="checkboxs"><input class="auth_rules rules_all" type="checkbox" name="rules[]" {$vo.select} value="{$vo.id}">{$vo.name}</label>
+                </dt>
+                <notempty name='vo["childs"]'>
+                    <volist name='vo["childs"]' id='vo1'>
+                        <dd class="bd">
+                            <div class="rule_check">
+
+                                <div>
+                                    <label class="checkboxs">
+                                        <input class="auth_rules rules_row" type="checkbox" name="rules[]"  {$vo1.select} value="{$vo1.id}"/>{$vo1.name}
+                                    </label>
+                                </div>
+                                   <notempty name='vo1["childs"]'>   
+                                       
+                                        <volist name='vo1["childs"]' id='vo2'>
+                                            <div class='serule_check'>
+                                             <span class="divsion">&nbsp;</span>
+                                       
+                                                <span>
+                                                    <label class="checkboxs sechild_row">
+                                                        <input class="auth_rules serules_row" type="checkbox" name="rules[]"  {$vo2.select} value="{$vo2.id}"/>{$vo2.name}
+                                                    </label>
+                                                </span>
+                                              <notempty name='vo1["childs"]'>   
+                                                  <br>
+                                                    <span class="divsion">&nbsp;</span>
+                                                    <span class="divsion">&nbsp;</span>
+                                                     <span class="child_row sechild_row trchild_row">
+                                                             <label class="checkboxs">
+                                                                  <volist name='vo2["childs"]' id='vo3'>
+                                                                 <input class="auth_rules" type="checkbox" name="rules[]" {$vo3.select}  value="{$vo3.id}"/>{$vo3.name}
+                                                                  </volist>
+                                                             </label>
+                                                     </span>
+                                                </notempty>    
+                                             <br>
+                                              </div>
+                                        </volist>
+                                      
+                                    </notempty>
+                            </div>
+                        </dd>
+                    </volist>
+                </notempty>
+	</dl>
+    </volist>
+    
+    
+  <div class="layui-form-item">
+    <div class="">
+     <input type='button' class="layui-btn ajax-post" lay-submit  url="{:url('menu_group')}" lay-filter="myform"  target-form="form-horizontal" value='立即提交'>
+      <a  class="layui-btn layui-btn-primary" href="#" onclick="javascript:history.go(-1);"><i class='iconfont '>&#xe697;</i>返回列表</a>
+    </div>
+  </div>
+</form>
+      
+      
+</block>
+<block name='script'>
+
+
+<script>
+var thechoose="";    
+layui.use('table', function(){
+    var  table = layui.table;
+table.on('tool(thetable)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+  var data = obj.data; //获得当前行数据
+  var layEvent = obj.event; //获得 lay-event 对应的值
+  var tr = obj.tr; //获得当前行 tr 的DOM对象
+  var ondel=tr.find(".one_del");
+
+  if(layEvent === 'edit'){ 
+    window.location.href="group_add?id="+data.id;
+  } else if(layEvent === 'del'){ //删除
+        thechoose=data.id;
+        change_status(ondel);
+  };
+}); 
+
+
+/*****多选******/
+table.on('checkbox(thetable)', function(obj){
+    var checkStatus = table.checkStatus('tabletest'); //test即为基础参数id对应的值
+    var thedata =checkStatus.data;
+    var newarr =new Array();
+    if(thedata.length>0){
+        
+        for(i=0;i<thedata.length;i++){
+            newarr[i]=thedata[i].id;
+        }
+        thechoose =newarr.join(',');
+    }else{
+        thechoose="";
+    }
+});
+});
+
+
+
+</script>
+<script>
+layui.use('form', function(){
+    var form = layui.form;
+    form.on('switch(status)', function(data){
+  console.log(data.elem); //得到checkbox原始DOM对象
+  console.log(data.elem.checked); //开关是否开启，true或者false
+  console.log(data.value); //开关value值，也可以通过data.elem.value得到
+  console.log(data.othis.prev().attr('ope')); //得到美化后的DOM对象
+  var one_change=data.othis.prev();
+  thechoose=data.value;
+   change_status(one_change);
+    });
+});
+</script>
+<script>
+    highlight_subnav('menu_system','menu_admin_grouplist','menu_admin');
+</script>
+<script type="text/javascript">
+
+        //全选节点
+        $('.rules_all').on('change',function(){
+            $(this).closest('dl').find('dd').find('input').prop('checked',this.checked);
+        });
+        //第二级选择
+        $('.rules_row').on('change',function(){
+            $(this).closest('.rule_check').find('.sechild_row').find('input').prop('checked',this.checked);
+        });
+    
+        //第三级选择
+        $('.serules_row').on('change',function(){
+            $(this).closest('.serule_check').find('.trchild_row').find('input').prop('checked',this.checked);
+        });
+    
+
+</script>
+</block>

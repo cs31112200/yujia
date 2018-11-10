@@ -1,0 +1,25 @@
+<volist name="menu" id="vo">
+<li>
+    <a href="{$vo.href}" id="{$vo.id_name}"><i class="fa fa-edit"></i> <span class="nav-label">{$vo.name}</span><notempty name="$vo.childs" ><span class="fa arrow"></span></notempty></a>
+    <notempty name="$vo.childs" >
+        <ul class="nav nav-second-level">
+            <volist name="$vo.childs" id="vo1">
+                <li>
+                <notempty name="$vo1.childs" >    
+                    <a href="{$vo1.href}">{$vo1.name}<span class="fa arrow"></span></a>
+                    <else/>
+                     <a class="J_menuItem"  href="{$vo1.href}">{$vo1.name}</a>
+                </notempty>
+                <notempty name="$vo1.childs" >
+                        <ul class="nav nav-third-level">
+                                 <volist name="$vo1.childs" id="vo2">
+                                     <li><a class="J_menuItem" href="{$vo2.href}">{$vo2.name}</a>
+                                 </volist>
+                        </ul>
+                </notempty>
+                </li>
+            </volist>
+        </ul>
+     </notempty>
+</volist>
+

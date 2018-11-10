@@ -1,0 +1,76 @@
+<extend name="base/base" />
+<block name="body">
+
+
+<div class="page-content">
+    <div class="page-header">
+		<h1>{$app.id?'修改':'新增'}用户</h1>
+	</div>
+
+    <div class="row rowblock">
+        <div class="col-xs-12">
+
+
+<form class="form-horizontal" action=" {:url($_toMethod)}" validatable="true" name="form1" id="form1" method="post">
+
+    <div class="form-group">
+        <label for="title" class="col-sm-1 control-label no-padding-right"><font class="red">*</font>用户昵称</label>
+        <div class="col-sm-11">
+            <div class="clearfix">
+            <input type="text" name="username" id="username" value="{$app.username|default=''}" size="40" class="col-xs-12 col-sm-2" /></div>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$app.id|default=''}">
+    
+
+    <div class="form-group">
+        <label for="title" class="col-sm-1 control-label no-padding-right"><font class="red">*</font> 帐号</label>
+        <div class="col-sm-11">
+            <div class="clearfix">
+            <input type="text" name="account" id="account" value="{$app.account|default=''}" size="40" class="col-xs-12 col-sm-2" /></div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="title" class="col-sm-1 control-label no-padding-right"><font class="red">*</font>密码</label>
+        <div class="col-sm-11">
+            <div class="clearfix">
+            <input type="password" name="password" id="password" value="{$app.password|default=''}" size="40" class="col-xs-12 col-sm-2" /></div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="title" class="col-sm-1 control-label no-padding-right"><font class="red">*</font>确认密码</label>
+        <div class="col-sm-11">
+            <div class="clearfix">
+            <input type="password" name="rpassword" id="rpassword" value="" size="40" class="col-xs-12 col-sm-2" /></div>
+        </div>
+    </div>
+    
+
+
+    
+    <div class="form-group">
+            <label class="col-sm-1 control-label no-padding-right"> </label>	
+        <div class="col-sm-11">
+
+        <button type="button"  class="btn btn-sm btn-primary ajax-post" target-form="form-horizontal"><i class="fa fa-arrow-up"></i> 提交</button>
+
+
+        <button type="button" class="btn btn-sm btn-danger" onclick="javascript:history.go(-1);"><i class="fa fa-repeat"></i> 返回列表</button>
+            </div>
+    </div>
+</form>
+        </div>
+    </div>
+</div>   
+    </block>
+<block name='script'>
+  
+<script type="text/javascript">
+$(document).ready(function() {
+    //高亮显示    
+    highlight_subnav('menu_admin_index','menu_admin');
+});
+</script>
+</block>

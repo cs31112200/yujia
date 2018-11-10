@@ -1,0 +1,201 @@
+<extend name="base/base" />
+<block name="body">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>新增/修改菜单</legend>
+    </fieldset>
+    <div class='mybox'  >
+        <form class="layui-form layui-form-pane" action="{:url($_toMethod)}" method="post" >
+            <input type="hidden" name="id" value="{$app.id|default=''}">
+            <div class="layui-form-item" >
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;配置名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="key_name" required  lay-verify="required" placeholder="请输入配置名称" autocomplete="off" class="layui-input" value="{$app.key_name|default=''}">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label"><span class="layui-badge-dot "></span>&nbsp;配置类型</label>
+                <div class="layui-input-block">
+                    <?php $select=isset($app['key_type'])?$app['key_type']:0;  echo model('Ui')-> getModelNorSelectList('Config','getType','','key_type','switch_input',$select); ?>
+                </div>
+            </div>
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;KEY值</label>
+                <div class="layui-input-block">
+                    <input type="text" name="key" value="{$app.key|default=''}"  lay-verify="required" placeholder="请输入KEY值" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item test" id="box1">
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;VALUE值</label>
+                <div class="layui-input-block">
+                    <input type="text" name="the_value" value="{$app.the_value|default=''}" id="bos1"   placeholder="请输入VALUE值" autocomplete="off" class="layui-input test2">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text test" id="box2" style="display:none;">
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;VALUE值</label>
+                <div class="layui-input-block">
+                    <textarea name="the_value" placeholder="请输入VALUE值" id="bos2" class="layui-textarea test2" disabled>{$app.the_value|default=''}</textarea>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item layui-form-text test" id="box3" style="display:none;">
+                <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;VALUE值</label>
+                <div class="layui-input-block">
+                    <textarea name="the_value" placeholder="请输入VALUE值" id="bos3" class="layui-textarea test2" disabled>{$app.the_value|default=''}</textarea>
+                </div>
+            </div>
+
+            <div class="layui-upload" id="box4"  style="display:none;">
+                <button type="button" class="layui-btn" id="uploads">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" style="width:100px; height:100px;" id="demo1" src="{$app.values|default='__PUBLIC__/static/image/nojpg.png'}">
+                    <p id="demoText" style="margin-top:5px;"></p>
+                    <input type="hidden" name="the_value" class="test2" id="bos4" disabled>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <div class="">
+                    <button class="layui-btn dopost" lay-submit  url="{:url($_toMethod)}" lay-filter="myform"  target-form="layui-form">立即提交</button>
+                    <a  class="layui-btn layui-btn-primary" href="#" onclick="javascript:history.go(-1);"><i class='iconfont '>&#xe697;</i>返回列表</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</block>
+<block name='script'>
+    <link href="__PUBLIC__/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-all.js?v=<?php echo mt_rand(10000,99999); ?>" charset="utf-8"></script>
+    <script>
+        layui.use('form', function(){
+            var form = layui.form;
+            //监听提交
+            form.on('submit(myform)', function(data){
+                // layer.msg(JSON.stringify(data.field));
+                doAjaxPost($(".dopost"));
+                return false;
+            });
+
+            form.on('select(key_type)', function(data){
+//
+//  console.log(data.elem); //得到select原始DOM对象
+//  console.log(data.value); //得到被选中的值
+//  console.log(data.othis); //得到美化后的DOM对象
+                var key_type =data.value;
+                $('.test').hide();
+                var target ="#box"+key_type;
+                var targets ="#bos"+key_type;
+                if(key_type==3){
+                    $(".ke-container-default").css('width',"899px");
+                }
+                $(".test2").attr('disabled','true');
+                $(targets).removeAttr('disabled');
+                $(target).show();
+
+
+            });
+
+
+        });
+    </script>
+
+    /****传图*****/
+    <script>
+        layui.use('upload', function(){
+
+            var $ = layui.jquery;
+            var upload = layui.upload;
+            console.log(upload);
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#uploads'
+                ,url: '/Upload/siglePictureUpload'
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                ,done: function(res){
+                    //如果上传失败
+                    if(res.code == 0){
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                    if(res.code==1){
+                        console.log(res.data.show_url);
+                        $("#bos4").val(res.data.show_url);
+                        return layer.msg('上传成功');
+                    }
+
+
+
+                }
+                ,error: function(){
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function(){
+                        uploadInst.upload();
+                    });
+                }
+            });
+
+        })
+    </script>
+    <script>
+        KindEditor.ready(function(K) {
+            K.create('textarea[id="bos3"]', {
+                langType : 'zh-CN',
+                filterMode : false,
+                pasteType : '2',
+                uploadJson : "<?php echo url('/Upload/kJupload'); ?>",
+                newlineTag : 'br',
+                allowFileManager : false,
+                items : [
+                    'source', '|', 'undo', 'redo', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                    'superscript', 'clearhtml', 'quickformat', '|', 'image', 'multiimage', 'insertfile', 'video', '/',
+                    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'table', 'hr', 'baidumap',
+                    'anchor', 'link', 'unlink'
+                ],
+                afterBlur: function(){this.sync();}
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        function switch_input(){
+            var key_type =$("#key_type").val();
+            $('.test').hide();
+            var target ="#box"+key_type;
+            var targets ="#bos"+key_type;
+            if(key_type==3){
+                $(".ke-container-default").css('width',"650px");
+            }
+            $(".test2").attr('disabled','true');
+            $(targets).removeAttr('disabled');
+            $(target).show();
+
+        }
+
+
+        $(document).ready(function() {
+            switch_input();
+        });
+    </script>
+
+    <script>
+        highlight_subnav('menu_system','menu_config_setting','menu_sys');
+    </script>
+</block>

@@ -1,0 +1,141 @@
+html,body {
+    background: #37434d;
+}
+
+.fn-fl {
+    float: left;
+}
+.fn-fr {
+    float: right;
+}
+.login-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 1100px;
+    height: 475px;
+    margin: auto;
+    padding: 0 0 40px;
+    /*background: #fff;*/
+}
+.login-hd {
+    margin-bottom: 30px;
+}
+.login-logo {
+    display:block;
+    width: 112px;
+    height: 34px;
+}
+.login-cover {
+    float: left;
+    width: 740px;
+    height: 400px;
+}
+.login-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.login-main {
+    position: relative;
+    float: left;
+    width: 300px;
+    height: 400px;
+    padding: 0 30px;
+    background: #fff;
+}
+.login-main .main-top {
+    overflow: hidden;
+    margin: 45px 0 30px;
+    font-size: 24px;
+    color: #333;
+    line-height: 34px;
+    text-align: center;
+}
+.login-main .main-top a {
+    color: #3e82f7;
+}
+.login-main .main-top a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.login-main .input-item {
+    margin-bottom: 30px;
+}
+.login-main .input-item label {
+    position: absolute;
+    width: 46px;
+    margin: 7px 0;
+    border-right: 1px solid #d1d7e3;
+}
+.login-main .input-item label img {
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin: 7px 14px;
+}
+.login-main .input-item input {
+    width: 229px;
+    border: 1px solid #d1d7e3;
+    padding: 13px 11px 12px 58px;
+    font-size: 14px;
+    line-height: 19px;
+    outline: none;
+    color: #666;
+}
+.login-main .input-item input:focus {
+    border-color: #3e82f7;
+}
+.remind-pw {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.remind-pw a {
+    float: right;
+    color: #3e82f7;
+}
+.remind-pw a:hover {
+    text-decoration: underline;
+}
+
+.remind-wrap {
+    position: relative;
+    float: left;
+    color: #596780;
+}
+.remind-wrap label {
+    padding-left: 25px;
+    background: url(../img/check.png) 0 0 no-repeat;
+    -webkit-background-size: 20px;
+    background-size: 20px;
+}
+.remind-wrap input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.remind-wrap input:checked~label {
+    background: url(../img/checked.png) 0 0 no-repeat;
+    -webkit-background-size: 20px;
+    background-size: 20px;
+}
+.login-btn {
+    display: block;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    line-height: 46px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #3e82f7;
+    color: #fff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}

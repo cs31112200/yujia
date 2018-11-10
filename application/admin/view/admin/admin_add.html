@@ -1,0 +1,113 @@
+<extend name="base/base" />
+<block name="body">
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>新增/修改用户基本信息</legend>
+</fieldset>
+ <div class='' style='    width: 899px;
+    padding: 20px 0 10px 20px;' >
+<form class="layui-form layui-form-pane" action="{:url($_toMethod)}" method="post" >
+    <input type="hidden" name="id" value="{$app.id|default=''}">
+    
+  <div class="layui-form-item" >
+      <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;用户名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名称" autocomplete="off" class="layui-input" value="{$app.username|default=''}">
+    </div>
+  </div>
+    
+  <div class="layui-form-item" >
+      <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;用户帐号</label>
+    <div class="layui-input-block">
+      <input type="text" name="account" required  lay-verify="required" placeholder="请输入用户名称" autocomplete="off" class="layui-input" value="{$app.account|default=''}">
+    </div>
+  </div>
+
+  <div class="layui-form-item" >
+    <label class="layui-form-label"><span class="layui-badge-dot "></span>&nbsp;归属部门</label></label>
+    <div class="layui-input-block">
+        <?php   $select =isset($app['group_id'])?$app['group_id']:""; echo (model('Ui')->getModelSelectLists('admin/Group','getGroupList','','id','name','group_id','请选择','',$select)); ?>
+    </div>
+  </div>    
+  
+  <div class="layui-form-item" >
+      <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;岗位名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="station_name" required  lay-verify="required" placeholder="请输入岗位名称" autocomplete="off" class="layui-input" value="{$app.station_name|default=''}">
+    </div>
+  </div>
+  
+  
+  <div class="layui-form-item" >
+    <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;用户密码</label>
+    <div class="layui-input-block">
+      <input type="password" name="password"  placeholder="请输入密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+    
+  <div class="layui-form-item test" id="box1">
+    <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;确认密码</label>
+    <div class="layui-input-block">
+      <input type="password" name="repassword"   placeholder="请再次输入密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+    
+    
+  <div class="layui-form-item">
+    <div class="">
+     <button class="layui-btn dopost" lay-submit  url="{:url($_toMethod)}" lay-filter="myform"  target-form="layui-form">立即提交</button>
+      <a  class="layui-btn layui-btn-primary" href="{:url('index')}"><i class='iconfont '>&#xe697;</i>返回列表</a>
+    </div>
+  </div>
+</form>
+ </div>
+
+</block>
+<block name='script'>
+<link href="__PUBLIC__/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-all.js" charset="utf-8"></script>
+<script>
+//Demo
+var form ="";
+layui.use('form', function(){
+   form = layui.form;
+  //监听提交
+  form.on('submit(myform)', function(data){
+   // layer.msg(JSON.stringify(data.field));
+    doAjaxPost($(".dopost"));
+    return false;
+  });
+form.on('select(merchant_id)', function(data){
+
+  var thevalue =data.value;
+  var param ="merchant_id="+thevalue;
+  getApiData('/admin/getGroupList',param,get_result);
+  
+  
+});      
+function get_result(rs){
+    console.log(rs);
+    $("#group_id").children().remove();
+    if(rs.code==0){
+        var str="";
+        for(i=0;i<rs.data.length;i++){
+            str+="<option value='"+rs.data[i]['id']+"'>"+rs.data[i]['name']+"</option>";
+        }
+        
+        $("#group_id").append(str);
+        
+        
+    }
+    form.render('select');
+}    
+
+
+  
+});
+
+</script>
+
+<script>
+    highlight_subnav('menu_system','menu_admin_index','menu_admin');
+</script>
+</block>

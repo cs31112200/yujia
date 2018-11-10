@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>渔佳-代理申请</title>
+    <script src="__PUBLIC__/dist/agent/js/flexible.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/css/reset.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/css/global.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/font/iconfont.css">
+    
+<script src="__PUBLIC__/dist/js/jquery.min.js"></script>
+<script src="__PUBLIC__/dist/js/common.js?v=<?php echo time().mt_rand(1,1111); ?>"></script>
+<script src="__PUBLIC__/dist/js/fancybox/jquery.fancybox.js"></script>
+</head>
+<body>
+    <style>
+        html {
+            height: 100%;
+            background: url(__PUBLIC__/dist/agent/img/dl_top.png) 0 top no-repeat #fff;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+    </style>
+    <h1 class="apply-tit">渔佳智能水产养殖系统</h1>
+    <div class="apply-logo">
+        <img src="__PUBLIC__/dist/agent/img/logo.png">
+    </div>
+    <h2 class="apply-tips">厦门市飞鸥科技有限公司</h2>
+    
+
+    <div class="apply-form" >
+        <form class='form-horizontal' action="{:url('to_apply')}" method='post'>
+            <div class="apply-img">
+                <img src="{$app.headimgurl|default='__PUBLIC__/dist/agent/img/headimg.png'}">
+            </div>
+            <h3>产品代理</h3>
+            <div class="apply-input">
+                <label for="username" class="iconfont icon-iconfuzhi"></label>
+                <input type="text" name="username" value="" placeholder="请输入姓名">
+            </div>
+            <div class="apply-input">
+                <label for="phone" class="iconfont icon-shouji"></label>
+                <input type="text" name="phone" value="" placeholder="请输入电话">
+            </div>
+            <div class="apply-select">
+                <?php $province =(isset($app['province']) && !empty($app['province']))?$app['province']:'';?>
+                <?php echo (model('admin/Ui')->getRelationSelectList('admin/Area','GetProvinceList','','id','region_name','province',1,$province,'选择省','get_city')); ?>
+
+               <?php $city =(isset($app['city']) && !empty($app['city']))?$app['city']:''; ?>
+               <?php echo (model('admin/Ui')->getRelationSelectList('admin/Area','GetCityList',$province,'id','region_name','city',2,$city,'选择市','get_area'));  ?>
+               
+               <?php $area=(isset($app['area']) && !empty($app['area']))?$app['area']:'';   ?>
+               <?php echo (model('admin/Ui')->getRelationSelectList('admin/Area','GetAreaList',$city,'id','region_name','area',3,$area,'选择区'));  ?>
+            </div>
+            <div class="apply-input">
+                <label for="addr" class="iconfont icon-icon"></label>
+                <input type="text" name="addr" value="" placeholder="请输入地址">
+            </div>
+            <button  type="button" class="apply-btn ajax-post"  target-form="form-horizontal" >提交申请</button>
+        </form>
+    </div>
+    
+</body>
+
+
+<!-- 省市区 -->
+<script>
+function get_city(){
+	var province_name = $('#province').val();
+	var url = '/City/getCityList';
+	 var para = "province_name="+province_name;
+	 getApiData(url, para, get_class_result);
+}
+function get_class_result(rs){
+	if(rs.code == 1){
+		var html = '';
+                var name ='';
+		$.each(rs.data, function (index, item) {
+	 		html += '<option value="'+item.id+'">'+item.region_name+'</option>';
+                        if(index==0)
+                            name =item.areaName;
+		});
+		$('#city').html(html);
+                get_area();
+                
+		
+	}else{
+	//	var html ="<option>选择省</option>";
+		var html ="<option>选择市</option>";
+		var html1 ="<option>选择区</option>";
+                $("#city").html(html);
+                $("#area").html(html1);
+	}
+}
+
+function get_area(){
+	var city_name = $('#city').val();
+	var url = '/City/getAreaList';
+	 var para = "city_name="+city_name;
+	 getApiData(url, para, get_class_result1);
+}
+function get_class_result1(rs){
+	if(rs.code == 1){
+		var html = '';
+		$.each(rs.data, function (index, item) {
+	 		html += '<option value="'+item.id+'">'+item.region_name+'</option>';
+		});
+		$('#area').html(html);
+		
+	}else{
+		alertMsg(0,rs.msg);
+	}
+}
+
+</script>  
+</html>

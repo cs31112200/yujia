@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <!-- 清除缓存-->
+    <meta http-equiv="Pragma" content="no-cache">
+    <!-- IOS启用 WebApp 全屏模式 -->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- IOS全屏模式下隐藏状态栏/设置状态栏颜色 content的值为default | black | black-translucent  -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>渔佳-{$app.name}的名片</title>
+    <script src="__PUBLIC__/dist/agent/js/flexible.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/css/reset.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/css/global.css">
+    <link rel="stylesheet" href="__PUBLIC__/dist/agent/font/iconfont.css">
+</head>
+<body>
+    <style>
+        html {
+            height: 100%;
+            background: url(__PUBLIC__/dist/agent/img/m/bg.png) 0 0 repeat;
+        }
+    </style>
+    <!-- 3个主图 -->
+    <img class="card-denglong" src="__PUBLIC__/dist/agent/img/m/1.png">
+    <img class="card-fuzi" src="__PUBLIC__/dist/agent/img/m/2.png">
+    <img class="card-yujia" src="__PUBLIC__/dist/agent/img/m/3.png">
+    
+    <div class="card-tit">
+        <img class="card-tit-main" src="__PUBLIC__/dist/agent/img/m/t1.png">
+        <img class="card-tit-vice" src="__PUBLIC__/dist/agent/img/m/tt.png">
+    </div>
+
+    <img class="card-logo" src="__PUBLIC__/dist/agent/img/m/4.png">
+    <!-- 用户代理名片 S -->
+
+    <div class="card-msg">
+        <div class="card-msg-tit">区域代理</div>
+        <div class="card-msg-inner">
+            <div class="card-msg-info">
+                <p>
+                    <strong>姓名</strong>
+                    <em>{$app.name}</em>
+                </p>
+                <p>
+                    <strong>电话</strong>
+                    <em style="text-decoration:underline;">
+                        <a href="tel:{$app.contact}"></a>
+                        {$app.contact}
+                    </em>
+                </p>
+            </div>
+            <img class="card-msg-img" src="{$app.headimgurl}">
+        </div>
+        <div class="card-msg-info"  style="width:100%;margin-top:-0.2rem;">
+            <p>
+                <strong>地址</strong>
+                <em style="width:12rem;">{$app.province}-{$app.city}-{$app.area}-{$app.address}</em>
+            </p>
+        </div>
+    </div>
+    
+    
+    
+    <!-- 用户代理名片 E -->
+    <div class="card-pao-wrap">
+        <img class="card-pao" src="__PUBLIC__/dist/agent/img/m/5.png">
+    </div>
+
+    <div class="card-tit">
+        <img class="card-tit-main" src="__PUBLIC__/dist/agent/img/m/t2.png">
+        <img class="card-tit-vice" src="__PUBLIC__/dist/agent/img/m/tt.png">
+    </div>
+
+    <div class="card-prod">
+        <img class="card-prod-big" src="__PUBLIC__/dist/agent/img/m/cp1.png">
+        <div class="card-prod-item">
+            <img class="card-prod-1" src="__PUBLIC__/dist/agent/img/m/cp2.png">
+            <img class="card-prod-2" src="__PUBLIC__/dist/agent/img/m/cp3.png">
+            <img class="card-prod-3" src="__PUBLIC__/dist/agent/img/m/cp4.png">
+            <img class="card-prod-4" src="__PUBLIC__/dist/agent/img/m/cp5.png">
+        </div>
+    </div>
+
+    <div class="card-tit">
+        <img class="card-tit-main" src="__PUBLIC__/dist/agent/img/m/t3.png">
+        <img class="card-tit-vice" src="__PUBLIC__/dist/agent/img/m/tt.png">
+    </div>
+
+    <div class="card-anli">
+        <img class="card-tit-main" src="__PUBLIC__/dist/agent/img/m/al1.png">
+        <img class="card-tit-main" src="__PUBLIC__/dist/agent/img/m/al2.png">
+    </div>
+
+    <div class="card-daili-font">代理授权与公司人员合影</div>
+
+    <div class="card-daili">
+        <img class="card-tit-main" src="__PUBLIC__/dist/agent/img/m/dl1.png">
+        <img class="card-tit-main" src="__PUBLIC__/dist/agent/img/m/dl2.png">
+    </div>
+
+    <div class="card-foot">
+        <img class="card-foot-code" src="__PUBLIC__/dist/agent/img/m/code.png">
+    </div>
+</body>
+</html>

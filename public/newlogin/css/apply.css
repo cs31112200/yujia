@@ -1,0 +1,183 @@
+html,body {
+    height: 100%;
+    background: url(../img/apply_bg.jpg) repeat-x bottom #fff;
+}
+
+.apply-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 500px;
+    min-height: 475px;
+    margin: auto;
+    padding: 0 0 40px;
+}
+.apply-logo {
+    display:block;
+    width: 160px;
+    height: 50px;
+    margin: 40px auto;
+}
+.apply-bigfont {
+    font-size: 28px;
+    text-align: center;
+    color: #333;
+
+}
+.apply-main {
+    margin: 30px auto 30px;
+}
+.apply-main .input-item {
+    width: 500px;
+    height: 42px;
+    margin-bottom: 20px;
+}
+.apply-main .input-item label {
+    float: left;
+    width: 120px;
+    padding-right:10px;
+    line-height: 42px;
+    color: #333;
+    font-size: 14px;
+    text-align:right;
+    letter-spacing: 2px;
+}
+.apply-main .input-item label span {
+    color: #f00;
+}
+.apply-main .input-item .input-wrap {
+    position:relative;
+    float: left;
+    width: 370px;
+    line-height:46px;   
+}
+.apply-main .input-item .input-wrap input {
+    border: 1px solid #d1d7e3;
+    height: 40px;
+    width: 348px;
+    padding: 0 10px;
+    line-height: 40px;
+    font-size: 16px;
+}
+.apply-main .input-item .input-wrap input:focus {
+    border-color: #3e82f7;
+}
+.apply-main .input-item .input-wrap select {
+    width: 175px;
+    height: 44px;
+    padding: 0 10px;
+    font-size: 18px;
+    border: 1px solid #d1d7e3;
+    color:#333;
+}
+.apply-main .input-item .input-wrap .ver-code {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 110px;
+    text-align:center;
+    line-height: 44px;
+    font-size: 16px;
+    color: #3e82f7;
+    cursor: pointer;
+    line-height: 46px;
+}
+.apply-btn {
+    display: block;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    line-height: 46px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #3e82f7;
+    color: #fff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.apply-dot1 {
+    position:absolute;
+    top: 430px;
+    left: -360px;
+    width: 50px;
+    height: 50px;
+    background: url(../img/dot_1.jpg) 0 0 no-repeat;
+    background-size: 100%;
+}
+.apply-dot2 {
+    position:absolute;
+    top: 160px;
+    left: 20px;
+    z-index: 0;
+    width: 32px;
+    height: 32px;
+    background: url(../img/dot_2.jpg) 0 0 no-repeat;
+    background-size: 100%;
+}
+.apply-dot3 {
+    position:absolute;
+    top: 290px;
+    right: -90px;
+    width: 56px;
+    height: 56px;
+    background: url(../img/dot_3.jpg) 0 0 no-repeat;
+    background-size: 100%;
+}
+.apply-dot4 {
+    position:absolute;
+    top: 580px;
+    right: -480px;
+    width: 61px;
+    height: 61px;
+    background: url(../img/dot_4.jpg) 0 0 no-repeat;
+    background-size: 100%;
+}
+
+.lick-upload {
+    float: left;
+    margin-right: 30px;
+    position: relative;
+    width: 118px;
+    height: 118px;
+    border: 1px solid #d1d7e3;
+    line-height: 118px;
+    text-align:center;
+    font-size: 20px;
+}
+.apply-main .input-item .input-wrap .lick-upload input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    filter:0;
+    z-index: 2;
+}
+.lick-upload img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+@font-face {font-family: "iconfont";
+  src: url('../myfont/iconfont.eot?v=214'); /* IE9*/
+  src: url('../myfont/iconfont.eo?v=214t#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../myfont/iconfont.woff?v=214') format('woff'), /* chrome, firefox */
+  url('../myfont/iconfont.ttf?v=214') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../myfont/iconfont.svg?v=214#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}

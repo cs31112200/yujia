@@ -1,0 +1,34 @@
+
+    <ul class="nav nav-list">
+          <notempty name="$sider">
+        <volist name='sider' id='vo'>
+            
+            <li class="" id='{$vo.id_name}'>
+                <a href="{$vo.href}" <notempty name="$vo.child">   class="dropdown-toggle" </notempty> >
+                        <i class=" menu-icon fa {$vo.ico}"></i>
+                        <span class="menu-text"  style="font-size: 18px;">{$vo.name}</span>
+                        <notempty name="$vo.child"><b class="arrow fa fa-angle-down"></b></notempty>
+                </a>
+                <b class="arrow"></b>
+                <notempty name="$vo.child">
+                    <ul class="submenu">
+                        <volist name='$vo.child' id='vo1'>
+                            <li class="" id='{$vo1.id_name}'>
+                                    <a href="{$vo1.href}">
+                                            <i class="{$vo.ico} fa fa-caret-right"></i>
+                                            <span style="font-size: 14px;">{$vo1.name}</span>
+                                    </a>
+
+                                    <b class="arrow"></b>
+                            </li>
+                        </volist>
+
+                    </ul>
+                </notempty>
+                
+            </li>
+         
+            
+        </volist>
+               </notempty>
+    </ul>

@@ -1,0 +1,86 @@
+<extend name="base/base" />
+<block name="body">
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>新增/修改菜单</legend>
+</fieldset>
+ <div class='' style='    width: 899px;
+    padding: 20px 0 10px 20px;' >
+<form class="layui-form layui-form-pane" action="{:url($_toMethod)}" method="post">
+    <input type="hidden" name="id" value="{$app.id|default=''}">
+  <div class="layui-form-item" >
+      <label class="layui-form-label"><span class="layui-badge-dot "></span>&nbsp;菜单名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="name" required  lay-verify="required" placeholder="请输入菜单名称" autocomplete="off" class="layui-input" value="{$app.name|default=''}">
+    </div>
+  </div>
+    
+  <div class="layui-form-item" >
+    <label class="layui-form-label"><span class="layui-badge-dot "></span>&nbsp;菜单ID</label>
+    <div class="layui-input-inline">
+      <input type="text" name="id_name" required lay-verify="required" placeholder="请输入菜单id" autocomplete="off" class="layui-input" value="{$app.id_name|default=''}">
+    </div>
+    <div class="layui-form-mid layui-word-aux">菜单id用于识别菜单js，英文填写</div>
+  </div>
+    
+    
+  <div class="layui-form-item" >
+    <label class="layui-form-label"><span class="layui-badge-dot "></span>&nbsp;父类菜单</label>
+    <div class="layui-input-block">
+        <?php   $theids =isset($app['pid'])?$app['pid']:0; echo (model('Ui')->getMenuList('pid',$theids)); ?>
+    </div>
+  </div>
+    
+  <div class="layui-form-item" >
+    <label class="layui-form-label"><span class="layui-badge-dot "></span>&nbsp;跳转地址</label>
+    <div class="layui-input-block">
+      <input type="text" name="href" value="{$app.href|default=''}"  lay-verify="required" placeholder="请输入跳转地址" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+    
+    
+  <div class="layui-form-item" >
+    <label class="layui-form-label"><span class="layui-badge-dot "></span>&nbsp;菜单样式</label>
+    <div class="layui-input-inline">
+      <input type="text" name="ico" value="{$app.ico|default='base'}" lay-verify="required" placeholder="请输入菜单样式" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-form-mid layui-word-aux">菜单样式，参考iconfont</div>
+  </div>
+    
+  <div class="layui-form-item" >
+    <label class="layui-form-label">排序</label>
+    <div class="layui-input-inline">
+      <input type="text" name="sort"  value="{$app.sort|default='0'}" lay-verify="number" placeholder="请输入序号" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-form-mid layui-word-aux">排序sort，越小越靠前</div>
+  </div>
+    
+    
+  <div class="layui-form-item">
+    <div class="">
+     <!-- <button  class="layui-btn " target-form="layui-form" lay-filter="myform" ><i class='iconfont '>&#xe901;</i>立即提交</button>-->
+      <button class="layui-btn dopost" lay-submit lay-filter="myform" url="{:url($_toMethod)}"  target-form="layui-form">立即提交</button>
+      <a  class="layui-btn layui-btn-primary" href="#" onclick="javascript:history.go(-1);"><i class='iconfont '>&#xe697;</i>返回列表</a>
+    </div>
+  </div>
+</form>
+ </div>
+
+</block>
+<block name='script'>
+    
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+  //监听提交
+  form.on('submit(myform)', function(data){
+   // layer.msg(JSON.stringify(data.field));
+    doAjaxPost($(".dopost"));
+    return false;
+  });
+});
+</script>
+<script>
+    highlight_subnav('menu_system','menu_sys_menu','menu_sys');
+</script>
+</block>

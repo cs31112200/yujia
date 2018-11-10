@@ -1,0 +1,71 @@
+
+<!--Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>乌云后台登录</title>
+<!-- Custom Theme files -->
+<link href="__PUBLIC__/blogin/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="后台登录" />
+<script src="__PUBLIC__/static/js/jquery.min.js" charset="utf-8"></script>
+<script src="__PUBLIC__/layui/layui.js"></script>
+<script src="__PUBLIC__/static/js/common.js?v=<?php echo mt_rand(1,10000000);?>" charset="utf-8"></script>
+<script src="__PUBLIC__/fancybox/jquery.fancybox.js" charset="utf-8"></script>
+<!--Google Fonts-->
+<!--<link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+--><!--Google Fonts-->
+</head>
+<body  onkeydown="keyLogin()">
+<!--header start here-->
+<div class="login-form">
+			<div class="top-login">
+				<span><img src="__PUBLIC__/static/image/shouye2.png" alt=""/></span>
+			</div>
+			<h1>ERP管理系统</h1>
+			<div class="login-top">
+			<form class="form-horizontal"  method="post" action="{:url('checkLogin')}" >
+				<div class="login-ic">
+					<i ></i>
+					<input type="text" name="account"  value="请输入帐号" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '请输入帐号';}"/>
+					<div class="clear"> </div>
+				</div>
+				<div class="login-ic">
+					<i class="icon"></i>
+					<input type="password"  name="password" />
+					<div class="clear"> </div>
+				</div>
+<!--				<div class="login-ic">
+					<i class="icon"></i>
+					<input type="password"  name="password" />
+					<div class="clear"> </div>
+				</div>
+			-->
+				<div class="log-bwn">
+					<input type="button"  value="Login" class="ajax-post" target-form="form-horizontal">
+				</div>
+			</form>
+			</div>
+			<p class="copy">© 2016 xxxxxxxxxxx</p>
+</div>		
+<!--header start here-->
+</body>
+<script>
+//按回车键登录
+function keyLogin()
+{
+    if (event.keyCode == 13) {
+        $('.ajax-post').click();
+    }
+}
+
+
+</script>
+</html>

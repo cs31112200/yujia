@@ -1,0 +1,36 @@
+<extend name="base/base" />
+<block name="mystyle">
+<style>
+    table,td{border-color:black}
+</style>
+    </block>
+<block name="body">
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>打印条码预览</legend>
+</fieldset>
+
+    <div style='width:80%;margin-left:10%; margin-bottom: 25px;'> <a  class="layui-btn layui-btn-primary" href="#" onclick='javascript:history.back(-1);'  ><i class='iconfont '>&#xe697;</i>返回列表</a></div>
+
+    <div style="width:80%;margin-left:10%;height:500px;" id="editor"></div>
+</block>
+<block name='script'>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script>
+    var ue = UE.getEditor('editor');
+    var htmlstr="<p style='text-align: center;'><img src='{$htmlstr}'></p> <p style='text-align: center;'>设备码：{$equip_code}</p>";
+
+
+
+ue.ready(function() {
+    ue.setContent(htmlstr);
+
+   // ue.setDisabled(['print','preview']);
+});
+
+    </script>
+<script>
+    highlight_subnav('menu_warehouse','menu_entry_list','menu_in_warehouse');
+</script>
+</block>
