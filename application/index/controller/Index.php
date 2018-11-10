@@ -10,7 +10,7 @@ class Index extends Controller
     
     
 	public  function index(){
-		echo "hello,world"；
+		echo "hello,world";
 	}
 	
     public function tuisong_test(){
