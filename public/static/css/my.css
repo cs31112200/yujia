@@ -1,0 +1,56 @@
+.layui-layout-admin .layui-body{
+    top: 0px !important;
+    bottom: 0px !important;
+}
+.layui-body {
+    left:0px !important;
+    background: white;
+}
+.layui-btn {
+     //   background-color: #1ab394 !important;
+}
+.layui-table td, .layui-table th, .layui-table-fixed-r, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {
+    border-color: #e4eaec !important;
+}
+.layui-table layui-table-cell{
+    height:28px !important;
+    line-height:28px !important;
+}
+.layui-table-view .layui-table[lay-size=lg] th .layui-table-cell {
+    height:28px !important;
+    line-height:28px !important;
+}
+
+@font-face {font-family: "iconfont";
+  src: url('../myfont/iconfont.eot?v=214'); /* IE9*/
+  src: url('../myfont/iconfont.eo?v=214t#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../myfont/iconfont.woff?v=214') format('woff'), /* chrome, firefox */
+  url('../myfont/iconfont.ttf?v=214') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../myfont/iconfont.svg?v=214#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {font-family: "iconfonts";
+  src: url('../myfonttwo/iconfont.eot?v=215'); /* IE9*/
+  src: url('../myfonttwo/iconfont.eo?v=215t#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../myfonttwo/iconfont.woff?v=215') format('woff'), /* chrome, firefox */
+  url('../myfonttwo/iconfont.ttf?v=215') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../myfonttwo/iconfont.svg?v=215#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfonts {
+  font-family:"iconfonts" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}

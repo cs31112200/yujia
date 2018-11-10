@@ -1,0 +1,68 @@
+.mybox{
+    width: 899px;
+    padding: 20px 0 10px 20px;
+}
+.my_add_btn{
+    padding:2px 10px; margin-top:22px;
+}
+.my_add_box{
+     width: 899px; padding: 20px 0 10px 20px;
+}
+.searchDiv {
+    border: 1px solid #daeef7;
+    padding: 20px 10px 10px 10px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+/*首页统计开始*/
+.panel {
+    float: left;
+    text-align: center;
+    width: 16.666%;
+    min-width: 210px;
+    margin-bottom: 10px;
+}
+.col {
+    padding-left: 10px;
+}
+.myrow {
+    margin-left: -10px;
+    overflow: hidden;
+}
+.panel_icon {
+    width: 40%;
+    display: inline-block;
+    padding: 28px 0;
+    background-color: #54ade8;
+    float: left;
+}
+.panel_word {
+    width: 60%;
+    display: inline-block;
+    float: right;
+    margin-top: 20px;
+}
+.myrow, .col, .panel_word, .panel_icon {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+}
+.panel_word span {
+    font-size: 25px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+}
+.panel_box a cite {
+    font-size: 16px;
+    display: block;
+    font-style: normal;
+}
+.panel_box a {
+    display: block;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    overflow: hidden;
+}
+/*首页统计结束*/

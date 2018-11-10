@@ -1,0 +1,12 @@
+[20-Nov-2014 02:28:35 Asia/Shanghai] PHP Notice:  curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead in E:\Wnmp\html\business_games\oss\lib\requestcore\requestcore.class.php on line 625
+[20-Nov-2014 02:32:39 Asia/Shanghai] PHP Warning:  filesize(): stat failed for D:\Book\Mining.the.Social.Web.pdf in E:\Wnmp\html\business_games\oss\sdk.class.php on line 1886
+[20-Nov-2014 02:33:22 Asia/Shanghai] PHP Warning:  filesize(): stat failed for D:\Book\Mining.the.Social.Web.pdf in E:\Wnmp\html\business_games\oss\sdk.class.php on line 1886
+[20-Nov-2014 02:33:23 Asia/Shanghai] PHP Warning:  filesize(): stat failed for D:\Book\Mining.the.Social.Web.pdf in E:\Wnmp\html\business_games\oss\sdk.class.php on line 1886
+[20-Nov-2014 02:35:24 Asia/Shanghai] PHP Notice:  curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead in E:\Wnmp\html\business_games\oss\lib\requestcore\requestcore.class.php on line 625
+[20-Nov-2014 02:35:30 Asia/Shanghai] PHP Fatal error:  Cannot redeclare upload_by_multi_part() (previously declared in E:\Wnmp\html\business_games\oss\demo.php:385) in E:\Wnmp\html\business_games\oss\demo.php on line 69
+[20-Nov-2014 02:46:38 Asia/Shanghai] PHP Notice:  curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead in E:\Wnmp\html\business_games\oss\lib\requestcore\requestcore.class.php on line 625
+[20-Nov-2014 02:46:44 Asia/Shanghai] PHP Fatal error:  Cannot redeclare upload_by_multi_part() (previously declared in E:\Wnmp\html\business_games\oss\demo.php:385) in E:\Wnmp\html\business_games\oss\demo.php on line 69
+[20-Nov-2014 02:47:11 Asia/Shanghai] PHP Notice:  curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead in E:\Wnmp\html\business_games\oss\lib\requestcore\requestcore.class.php on line 625
+[20-Nov-2014 02:47:17 Asia/Shanghai] PHP Fatal error:  Cannot redeclare upload_by_multi_part() (previously declared in E:\Wnmp\html\business_games\oss\demo.php:385) in E:\Wnmp\html\business_games\oss\demo.php on line 69
+[20-Nov-2014 02:48:05 Asia/Shanghai] PHP Notice:  curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead in E:\Wnmp\html\business_games\oss\lib\requestcore\requestcore.class.php on line 625
+[20-Nov-2014 02:48:05 Asia/Shanghai] PHP Fatal error:  Cannot redeclare upload_by_multi_part() (previously declared in E:\Wnmp\html\business_games\oss\demo.php:385) in E:\Wnmp\html\business_games\oss\demo.php on line 69
