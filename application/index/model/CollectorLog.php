@@ -77,12 +77,13 @@ protected $autoWriteTimestamp = false;
                     $return3[$h."_".$fit]['time']=$tims;
                     $return3[$h."_".$fit]['value']=sprintf("%.2f",$v['oxygen']);
                 }else if($type==3){
-                    $return1[$i]['time']=$v['hour'];
-                    $return1[$i]['value']=sprintf("%.2f",$v['temperature']);
-                    $return2[$i]['time']=$v['hour'];
-                    $return2[$i]['value']=sprintf("%.2f",$v['ph']);
-                    $return3[$i]['time']=$v['hour'];
-                    $return3[$i]['value']=sprintf("%.2f",$v['oxygen']);
+                     $h =$v['hour'];
+                    $return1[$h]['time']=$v['hour'];
+                    $return1[$h]['value']=sprintf("%.2f",$v['temperature']);
+                    $return2[$h]['time']=$v['hour'];
+                    $return2[$h]['value']=sprintf("%.2f",$v['ph']);
+                    $return3[$h]['time']=$v['hour'];
+                    $return3[$h]['value']=sprintf("%.2f",$v['oxygen']);
                     $i++;
                 }else if($type==4){
                     $h =date('d',strtotime($v['the_day']));
