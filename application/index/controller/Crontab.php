@@ -494,18 +494,18 @@ class Crontab extends Base
                                   $month =date('Y-m',$the_time);
                                   $year =date('Y',$the_time);
                                   if(!isset($insert[$v."_".$hour."_".$mini])){
-                                      $insert[$v2['number']."_".$hour."_".$mini]['hour']=$hour;
-                                      $insert[$v2['number']."_".$hour."_".$mini]['month']=$month;
-                                      $insert[$v2['number']."_".$hour."_".$mini]['year']=$year;
-                                      $insert[$v2['number']."_".$hour."_".$mini]['mini']=$mini;
-                                      $insert[$v2['number']."_".$hour."_".$mini]['the_day']=$insert_day;
-                                      $insert[$v2['number']."_".$hour."_".$mini]['oxygen']=$v2['dissolvedOxygen'];
-                                      $insert[$v2['number']."_".$hour."_".$mini]['temperature']=$v2['waterTemperature'];
-                                      $insert[$v2['number']."_".$hour."_".$mini]['ph']=$v2['PH'];
-                                      $insert[$v2['number']."_".$hour."_".$mini]['num']=$v2['number'];
-                                      $insert[$v2['number']."_".$hour."_".$mini]['equip_code']=$equip_code;
-                                      $insert[$v2['number']."_".$hour."_".$mini]['member_id']=$member_id;
-                                      $insert[$v2['number']."_".$hour."_".$mini]['create_time']=time();
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['hour']=$hour;
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['month']=$month;
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['year']=$year;
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['mini']=$mini;
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['the_day']=$insert_day;
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['oxygen']=$v2['dissolvedOxygen'];
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['temperature']=$v2['waterTemperature'];
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['ph']=$v2['PH'];
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['num']=$v2['number'];
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['equip_code']=$equip_code;
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['member_id']=$member_id;
+                                      $insert[$equip_code."_".$v2['number']."_".$hour."_".$mini]['create_time']=time();
                                   }
                               }
                             }
