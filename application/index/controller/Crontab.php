@@ -460,7 +460,7 @@ class Crontab extends Base
         $end =strtotime($the_day." 23:59:59");
         //获取总的member_equip
         $all_react =model('MemberEquip')->get_all_list();
-        
+
         $all_keys =$redis->keys('*_sensor_data_history');
         $insert=[];
         if(!empty($all_keys)){

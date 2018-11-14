@@ -1019,16 +1019,16 @@ class Equip extends Base
     }
     public function print_qrcode(){
         $equip=db('Equipment')->where('id',input('id'))->find();
-        $savePath = APP_PATH . '../public/qrcode/';
-        $webPath = '/qrcode/';
-        $qrData = $equip['qrcode'];
-        $qrLevel = 'H';
-        $qrSize = '10';
-        $savePrefix = 'Yujia';
-        if($filename = createQRcode($savePath, $qrData, $qrLevel, $qrSize, $savePrefix)){
-            $pic = $webPath . $filename;
-        }
-        $htmlstr=$pic;
+//        $savePath = APP_PATH . '../public/qrcode/';
+//        $webPath = '/qrcode/';
+//        $qrData = $equip['qrcode'];
+//        $qrLevel = 'H';
+//        $qrSize = '10';
+//        $savePrefix = 'Yujia';
+//        if($filename = createQRcodeToQny($savePath, $qrData, $qrLevel, $qrSize, $savePrefix)){
+//            $pic = $webPath . $filename;
+//        }
+        $htmlstr=$equip['qrcode_pic'];
         $assign=[
             'htmlstr'=>$htmlstr,
             'equip_code'=>$equip['equip_code'],

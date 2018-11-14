@@ -17,6 +17,79 @@ class Upload extends Controller{
         };
     }
     
+    
+    public function qny_upload(){
+        
+
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('file');
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $return =[];
+
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+
+        if($info){
+            
+                $config =config('QNY_CLOUD');
+                $qny_token= getQnyTokens();
+                $save_name =$info->getSaveName();
+                $save_name =  str_replace('\\', '/', $save_name);
+                $file_path =UPLOAD_PATH.'/uploads/'.$save_name;
+                $uploadMgr = new \Qiniu\Storage\UploadManager();
+                $result =$uploadMgr->putFile($qny_token, $save_name, $file_path);
+                //print_r($result);exit;
+              //  $result =$oss->upload_file_by_file($oss_config['bucket'], $save_name, $file_path);
+                $return[$k]['show_url'] =$config['pre_url'].$save_name;
+                $return[$k]['save_url'] =$save_name;
+                @unlink($file_path);
+        }else{
+            // 上传失败获取错误信息
+            $back['code']=0;
+            $back['msg']=$file->getError();
+            $back['data']='';
+            return ($back);
+        }
+
+
+        $back['code']=(!empty($return))?1:0;
+        $back['data']=$return;
+        $back['msg'] =($back['code']==1)?"上传成功":'上传失败';
+        return ($back);
+    }
+    public function qny_kJupload(){
+        $file = request()->file('imgFile');
+        // 移动到框架应用根目录/public/uploads/ 目录下
+       // print_r($file);exit;
+        $img_ext ='jpg,png,gif,jpeg';
+        $file_ext='doc,docx,xls,xlsx,zip,rar,pdf';
+        $return =[];
+        $info = $file->validate(['size'=>1024*1024*100,'ext'=>'jpg,png,gif,jpeg,pdf,doc,docx,xls,xlsx,zip,rar'])->move(ROOT_PATH . 'public' . DS . 'uploads');
+        if($info){
+            $save_name =$info->getSaveName();
+            $save_name =  str_replace('\\', '/', $save_name);
+            $file_path =UPLOAD_PATH.'/uploads/'.$save_name;
+            $config =config('QNY_CLOUD');
+            $qny_token= getQnyTokens();
+            $uploadMgr = new \Qiniu\Storage\UploadManager();
+            $result =$uploadMgr->putFile($qny_token, $save_name, $file_path);
+                
+            $return['show_url'] =$config['pre_url'].$save_name;;
+            $return['save_url'] =$config['pre_url'].$save_name;;
+            $return['file_name']=$_FILES['imgFile']['name'];
+            $the_ext = $info->getExtension();
+            $return['object_type']=(strpos($img_ext,$the_ext)!==false)?1:2;
+        }else{
+            // 上传失败获取错误信息
+            $back['error']=1;
+            $back['message']=$file->getError();
+           return json_encode($back);
+        }
+        $back['error']=0;
+        $back['url']=$return['show_url'];
+        return (json_encode($back));
+    }
+    
+    
 /*图片上传阿里云
  * 
  */
@@ -260,6 +333,7 @@ class Upload extends Controller{
         $back['url']=$return['show_url'];
         return (json_encode($back));
     }
+    
     
     
 

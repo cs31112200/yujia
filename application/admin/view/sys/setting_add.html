@@ -116,7 +116,7 @@
             //普通图片上传
             var uploadInst = upload.render({
                 elem: '#uploads'
-                ,url: '/Upload/siglePictureUpload'
+                ,url: '/Upload/qny_upload'
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
                     obj.preview(function(index, file, result){
@@ -156,7 +156,7 @@
                 langType : 'zh-CN',
                 filterMode : false,
                 pasteType : '2',
-                uploadJson : "<?php echo url('/Upload/kJupload'); ?>",
+                uploadJson : "<?php echo url('/Upload/qny_kJupload'); ?>",
                 newlineTag : 'br',
                 allowFileManager : false,
                 items : [

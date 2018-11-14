@@ -594,6 +594,13 @@ class Result extends ApiBase
             switch($v){
                 //同步间隔
                 case 1:
+
+                    $insert['content']="case 1";
+                    $insert['type']=21;
+                    $insert['create_time']=time();
+                    db('testt')->insert($insert);
+
+
                     $intervals =substr($code_str,22,2);
                     $data11['equip_id']=$equip_result['id'];
                     $data12['jg_time']=intval($intervals);
@@ -609,6 +616,12 @@ class Result extends ApiBase
 
                 //布撤防
                 case 2:
+                    $insert['content']="case 2";
+                    $insert['type']=21;
+                    $insert['create_time']=time();
+                    db('testt')->insert($insert);
+
+
                     $bcf =substr($code_str,24,2);
                     $bcf =intval($bcf);
                     if($bcf==0){
@@ -643,6 +656,12 @@ class Result extends ApiBase
                     
                 //电流阀值
                 case 3:
+                    $insert['content']="case 3";
+                    $insert['type']=21;
+                    $insert['create_time']=time();
+                    db('testt')->insert($insert);
+
+
                     $elect_range=substr($code_str,26,4);
                     $elect_range =intval($elect_range)/10;
                     $data31['equip_id']=$equip_result['id'];
@@ -657,6 +676,12 @@ class Result extends ApiBase
                     break;
                 //设备管理
                 case 5:
+                    $insert['content']="case 5";
+                    $insert['type']=21;
+                    $insert['create_time']=time();
+                    db('testt')->insert($insert);
+
+
                     $search['equip_id']=$equip_result['id'];
                     $member_equip_result =db('MemberEquip')->where($search)->find();
                     if(empty($member_equip_result)){
@@ -682,11 +707,26 @@ class Result extends ApiBase
                     $insert_array =array_diff($target_nums,$save_nums);
                     $delete_array =array_diff($save_nums,$target_nums);
 
+
+                    $insert_implode=implode(',',$insert_array);
+                    $delete_implode=implode(',',$delete_array);
+
+
+                    $insert['content']="新增通道$insert_implode";
+                    $insert['type']=19;
+                    $insert['create_time']=time();
+                    db('testt')->insert($insert);
+
+                    $insert['content']="减少通道$delete_implode";
+                    $insert['type']=20;
+                    $insert['create_time']=time();
+                    db('testt')->insert($insert);
+
                     //同步设备管理
                     $result =model('MemberAera')->openPip($member_id,$equip_id,$insert_array);
                     $result =model('MemberAera')->deletePip($member_id,$equip_id,$delete_array);
                     
-                    $content ="当前使用的通道号:".implode(',', $insert_array);
+                    $content ="当前新增的通道号:".$insert_implode."减少的通道号:".$delete_implode;
                     //记录操作
                     model('EquipOpe')->addOpe($member_id,$equip_result['id'],1,$content);
 
@@ -697,6 +737,12 @@ class Result extends ApiBase
                     break;
                 //设备操作    
                 case 6:
+                    $insert['content']="case6";
+                    $insert['type']=21;
+                    $insert['create_time']=time();
+                    db('testt')->insert($insert);
+
+
                     $search['equip_id']=$equip_result['id'];
                     $member_equip_result =db('MemberEquip')->where($search)->find();
                     if(empty($member_equip_result)){
@@ -711,6 +757,11 @@ class Result extends ApiBase
                     
                     $device_operator=substr($code_str,36,6);
                     $target_open_nums =decode_equip_manage($device_operator);
+                    $target_open_nums=implode(',',$target_open_nums);
+                    $insert['content']="打开的通道$target_open_nums";
+                    $insert['type']=18;
+                    $insert['create_time']=time();
+                    db('testt')->insert($insert);
 
                //     print_r( $target_open_nums);echo "   ";
 

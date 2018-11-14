@@ -403,7 +403,6 @@ class Client extends Base
             /***自定义验证区域*****/
             $data=input('post.');
             //存储
-            dump($data);exit();
             $back =$model->__msave(input('post.'),'PoolType');
             $back['url']=($back['code']==0)?'':$this->getCookie('pool_list');
             if($back['code']==1){
