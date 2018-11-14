@@ -9,7 +9,7 @@ class Index extends Controller
 {
     
     public function index(){
-        echo generalQrcode(111,false);
+        echo "OK";
     }
     
     public function tuisong_test(){
