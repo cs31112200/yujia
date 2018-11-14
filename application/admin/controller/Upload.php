@@ -39,7 +39,7 @@ class Upload extends Controller{
                 $result =$uploadMgr->putFile($qny_token, $save_name, $file_path);
                 //print_r($result);exit;
               //  $result =$oss->upload_file_by_file($oss_config['bucket'], $save_name, $file_path);
-                $return['show_url'] =$config['pre_url'].$save_name;
+                $return['show_url'] =$save_name;
                 $return['save_url'] =$save_name;
                 @unlink($file_path);
         }else{
