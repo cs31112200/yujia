@@ -37,6 +37,7 @@ class Version extends Base{
             foreach($list as $k=>$v){
                 $list[$k]['status']=$v['status']==1?"正常":"失效";
                 $list[$k]['is_force']=$v['is_force']==1?"是":"不是";
+                $list[$k]['qrcode']=generalQnyImg($list[$k]['qrcode']);
                 if($list[$k]['type']==1){
                     $list[$k]['type']='android';
                 }

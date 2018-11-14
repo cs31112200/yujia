@@ -88,7 +88,7 @@ class Equipment extends Base{
                 $list[$k]['status_color']=$color_arr[$v['status']];
                 $list[$k]['status_name']=$name_arr[$v['status']];
                 $list[$k]['create_time']=date('Y-m-d H:m:s',$list[$k]['create_time']);
-                $list[$k]['qrcode_pic']=generalImg($list[$k]['qrcode_pic']);
+                $list[$k]['qrcode_pic']=generalQnyImg($list[$k]['qrcode_pic']);
             }
         }
         //  print_r($list);exit;

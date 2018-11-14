@@ -71,7 +71,7 @@ class Advert extends Base{
        $result =db($this->getTheTable())->where($data)->field('img,tourl,tourl_type')->select();
        if(!empty($result)){
            foreach($result as $k=>$v){
-               $result[$k]['img']=  generalImg($v['img']);
+               $result[$k]['img']=  generalQnyImg($v['img']);
            }
        }
        return $result;
@@ -103,7 +103,7 @@ class Advert extends Base{
                 $list[$k]['status']=$v['status']==1?"正常":"失效";
                 $list[$k]['tourl_type']=$v['tourl_type']==1?"内网":"外网";
                 $list[$k]['ad_space']=$v['ad_space']==1?"天气":"日志";
-                $list[$k]['imgs']=isset($v['img'])?generalImg($v['img']):"";
+                $list[$k]['imgs']=isset($v['img'])?generalQnyImg($v['img']):"";
                 if(!empty($list[$k]['create_time'])){
                     $list[$k]['create_time']=date('Y-m-d H:m:s',$list[$k]['create_time']);
                 }

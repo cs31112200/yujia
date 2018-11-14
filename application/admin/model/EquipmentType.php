@@ -34,7 +34,7 @@ protected $autoWriteTimestamp = false;
     public function __formatList($list = null) {
         if(!empty($list)){
             foreach($list as $k=>$v){
-                $list[$k]['type_img']=generalImg($v['type_img']);
+                $list[$k]['type_img']=generalQnyImg($v['type_img']);
                 $list[$k]['status']=$list[$k]['status']==1?'正常':'失效';
                 $list[$k]['create_time']=date('Y-m-d H:i:s',$v['create_time']);
             }
@@ -43,7 +43,7 @@ protected $autoWriteTimestamp = false;
     }
     public function __formatEdit($data = null) {
         if(!empty($data)){
-            $data['type_img']=empty($data['type_img'])?'':generalImg($data['type_img']);
+            $data['type_img']=empty($data['type_img'])?'':generalQnyImg($data['type_img']);
         }
         return $data;
     }
