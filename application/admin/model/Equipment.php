@@ -161,7 +161,7 @@ class Equipment extends Base{
         $qrSize = '10';
         $savePrefix = 'Yujia';
         if($filename = createQRcodeToQny($savePath, $qrData, $qrLevel, $qrSize, $savePrefix)){
-            $pic = $webPath . $filename;
+            $pic = $filename;
         }
         $data['qrcode_pic']=$pic;
         $data['create_time']=time();
@@ -195,7 +195,7 @@ class Equipment extends Base{
             $qrSize = '10';
             $savePrefix = 'Yujia';
             if($filename = createQRcodeToQny($savePath, $qrData, $qrLevel, $qrSize, $savePrefix)){
-                $pic = $webPath . $filename;
+                $pic = $filename;
             }
             $data['qrcode_pic']=$pic;
         }

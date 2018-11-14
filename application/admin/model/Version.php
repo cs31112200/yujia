@@ -174,7 +174,7 @@ class Version extends Base{
             $qrSize = '10';
             $savePrefix = 'Yujia';
             if($filename = createQRcodeToQny($savePath, $qrData, $qrLevel, $qrSize, $savePrefix)){
-                $pic = $webPath . $filename;
+                $pic = $filename;
             }
             $data['qrcode']=$pic;
             $result=db('Version')->where('id',$id)->update($data);
