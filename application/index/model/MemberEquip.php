@@ -65,8 +65,33 @@ protected $autoWriteTimestamp = false;
         }
     }
     
+/*获取所有的设备列表
+ * 
+ */    
+    public function getAllEquipList(){
+        $map=[];
+        $result =db($this->getTheTable())->alias('a')
+               ->join($prex.'equipment b','a.equip_id=b.id','LEFT')
+               ->join($prex.'member c','a.member_id=c.id','LEFT')
+               ->field('a.*,b.equip_code,a.jpush_id')->where($data)->select();
+        if(empty($result)){
+           echo "no list";exit;
+        }
+        $redis= initRedis();
+        foreach($result as $k=>$v){
+            $msg_arr['jpush_id']=$v['jpush_id'];
+            $msg_arr['name']=$v['name'];
+            $msg_arr['warm_phone']=$v['warm_phone'];
+            $msg_arr['spare_phone']=$v['spare_phone'];
+            //到期时间
+            $msg_arr['end_time']=$v['end_time'];
+            model('RedisEquip')->set_equip_msg($v['equip_code'],$msg_arr,$redis);
+        }
+        echo "success";
+        
+    }
     
-    
+   
     
     
 /*获取我的设备列表

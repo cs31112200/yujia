@@ -9,8 +9,13 @@ class Index extends Controller
 {
     
     public function index(){
-        echo "OK";
+        echo generalQrcode(111,false);
     }
+    
+    public function batch_set_equip_msg(){
+        
+    }
+    
     
     public function tuisong_test(){
         for($i=1;$i<=20;$i++){
