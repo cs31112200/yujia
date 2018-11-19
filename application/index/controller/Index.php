@@ -9,7 +9,7 @@ class Index extends Controller
 {
     
     public function index(){
-        echo generalQrcode(111,false);
+        echo "OK";
     }
     
     public function batch_set_equip_msg(){
