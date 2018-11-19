@@ -41,9 +41,19 @@ class Weather extends ApiBase
         //获取广告列表
         $return['ad_list']=model('admin/Advert')->getAdvertBySpace(1);
         
-        
+
+
         //获取预警列表
-        $return['alarm_list']=model('MemberWarn')->getCityList($member_id);
+//        $return['alarm_list']=model('MemberWarn')->getCityList($member_id);
+        $warnweather=model('MemberWarn')->getCityList($member_id);
+        foreach($warnweather as $k=>$v){
+            $time=time()-strtotime($v["warn_detail"]['issueTime']);
+            if(abs($time)<=86400*5){
+                $return['alarm_list']=$warnweather;
+            }else{
+                $return['alarm_list']='';
+            }
+        }
         //echo "dsfd";
       //  print_r($return);exit;
         $this->returnJsonData(1,'请求成功',$return);

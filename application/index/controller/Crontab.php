@@ -18,6 +18,7 @@ class Crontab extends Base
         if(empty($city_list)){
             return;
         }
+
         foreach($city_list as $k=>$v){
             
             //获取城市对应的天气
@@ -28,20 +29,19 @@ class Crontab extends Base
             }
             $result =json_decode($json,true);
 
-            
+
             //记录缓存
             cache('weather_'.$v['city_name'], formatWeather($json),14400);
-            
-            
+
             //判断是否有alarm_list  如果有 存入预警
             if(isset($result['showapi_res_body']['alarmList']) && !empty($result['showapi_res_body']['alarmList'])){
                 $alarmlist =$result['showapi_res_body']['alarmList'];
-               // print_r($alarm);exit;
+//                print_r($alarm);exit;
                 foreach($alarmlist as $k1=>$v1){
                     $weatherLog=model('WeatherLog');
                     $add_result=$weatherLog->addWeatherLog($v1['province'],$v1['city'],$v1['issueTime'],$v1['signalLevel'],$v1['signalType'],$v1['issueContent']);
-                   // echo $weatherLog->getLastInsID();
-                    
+//                    echo $weatherLog->getLastInsID();
+//                    dump($add_result);
                     //如果add_result有增加那就表示有预警则需要报警
                     if($add_result==1){
                         
