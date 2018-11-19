@@ -115,6 +115,7 @@ class Advert extends Base{
  *
  */
     public function __formatEdit($data=null){
+        $data['img']=empty($data['img'])?'':generalQnyImg($data['img']);
         return $data;
     }
 

@@ -55,7 +55,7 @@ class Version extends Base{
     }
 
     public function __formatEdit($data = null) {
-//        $data['down_urls']=isset($data['down_url'])?generalImg($data['down_url']):"";
+        $data['down_url']=isset($data['down_url'])?generalQnyImg($data['down_url']):"";
         return $data;
     }
 

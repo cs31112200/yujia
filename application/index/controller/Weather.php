@@ -51,7 +51,7 @@ class Weather extends ApiBase
             if(abs($time)<=86400*5){
                 $return['alarm_list']=$warnweather;
             }else{
-                $return['alarm_list']='';
+                $return['alarm_list']=[];
             }
         }
         //echo "dsfd";
