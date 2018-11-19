@@ -44,7 +44,7 @@ class MemberWarn extends Base{
                 if(abs($time)<=86400*5) {
                     $result[$k]['warn_detail'] = $MemberWarnLog;
                 }else{
-                    $result[$k]['warn_detail']=[];
+                    $result[$k]['warn_detail']=null;
                 }
             }
         }
