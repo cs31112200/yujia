@@ -34,6 +34,12 @@ class Index extends Controller
         echo "success";
     }
     
+    public function privite(){
+        $content = sysC('PRIVATE_CONTENT');
+        $this->assign('content',$content);
+        return $this->fetch();
+    }
+    
     
     public function tuisong_test(){
         for($i=1;$i<=20;$i++){
