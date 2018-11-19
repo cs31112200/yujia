@@ -111,6 +111,12 @@ class Advert extends Base{
             return $list;
         }
     }
+    /*处理编辑初始化
+ *
+ */
+    public function __formatEdit($data=null){
+        return $data;
+    }
 
     /*更新之前
      *
