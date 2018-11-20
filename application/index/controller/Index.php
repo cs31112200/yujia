@@ -18,7 +18,7 @@ class Index extends Controller
         $result =db('MemberEquip')->alias('a')
                ->join($prex.'equipment b','a.equip_id=b.id','LEFT')
                ->join($prex.'member c','a.member_id=c.id','LEFT')
-               ->field('a.*,b.equip_code,a.jpush_id')->where($map)->select();
+               ->field('a.*,b.equip_code,c.jpush_id')->where($map)->select();
         if(empty($result)){
            echo "no list";exit;
         }
