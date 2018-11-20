@@ -14,6 +14,7 @@ class Index extends Controller
     
     public function batch_set_equip_msg(){
         $map=[];
+        $prex =config('database.prefix');
         $result =db('MemberEquip')->alias('a')
                ->join($prex.'equipment b','a.equip_id=b.id','LEFT')
                ->join($prex.'member c','a.member_id=c.id','LEFT')
