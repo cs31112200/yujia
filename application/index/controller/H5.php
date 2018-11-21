@@ -25,7 +25,7 @@ class H5 extends Controller
         
         //获取最新的版本
   //      $new_result =model('admin/Version')->getNewVersion();
-        $android_img =$result['qrcode'];
+        $android_img = generalQnyImg($result['qrcode']);
        // $android_url =generalQrcode($android_url,false);
        // echo $android_url;exit;
         $this->assign('android_img',$android_img);
