@@ -166,7 +166,7 @@ class Version extends Base{
     public function setqrcode($id){
         $version=db('Version')->where('id',$id)->find();
         if(!empty($version['down_url'])){
-            $url=generalImg($version['down_url']);
+            $url= generalQnyImg($version['down_url']);
             $savePath = APP_PATH . '../public/qrcode/';
             $webPath = '/qrcode/';
             $qrData = $url;
