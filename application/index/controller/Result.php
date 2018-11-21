@@ -780,7 +780,7 @@ class Result extends ApiBase
                         $data1['status']=2;
                         model('MemberAera')->where($datat)->update($data1);
                     }
-                    $content ="当前打开的通道号:".implode(',', $target_open_nums);
+                    $content ="当前打开的通道号:".$target_open_nums;
                     //记录操作
                     model('EquipOpe')->addOpe($member_id,$equip_result['id'],3,$content);
 
