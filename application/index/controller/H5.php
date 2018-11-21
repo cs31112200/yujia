@@ -21,8 +21,14 @@ class H5 extends Controller
             $result['thetype']=3;
         }
         $result['create_time']=date('Y-m-d H:i:s',$result['create_time']);
-      //  print_r($new_version);
-     //   print_r($result);exit;
+        
+        
+        //获取最新的版本
+        $new_result =model('admin/Version')->getNewVersion();
+        $android_img =$new_result['android']['down_img'];
+       // $android_url =generalQrcode($android_url,false);
+       // echo $android_url;exit;
+        $this->assign('android_img',$android_img);
         $this->assign('app',$result);
         return $this->fetch();
     }
