@@ -59,6 +59,7 @@ protected $autoWriteTimestamp = false;
         }
         $save_arr=[
           'name'=>$name,  
+          'user_name'=>'用户',  
           'warm_phone'=>$warm_phone,  
           'spare_phone'=>$spare_phone,  
           'jpush_id'=>$jpush_id,  
