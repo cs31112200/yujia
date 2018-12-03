@@ -26,6 +26,8 @@ class Index extends Controller
         foreach($result as $k=>$v){
             $msg_arr['jpush_id']=$v['jpush_id'];
             $msg_arr['name']=$v['name'];
+            $msg_arr['member_id']=$v['member_id'];
+            $msg_arr['equip_id']=$v['equip_id'];
             $msg_arr['warm_phone']=$v['warm_phone'];
             $msg_arr['spare_phone']=$v['spare_phone'];
             //到期时间

@@ -48,6 +48,8 @@ protected $autoWriteTimestamp = false;
             $spare_phone =(isset($msg_arr['spare_phone']) && !empty($msg_arr['spare_phone']))?$msg_arr['spare_phone']:"";
             $jpush_id =(isset($msg_arr['jpush_id']) && !empty($msg_arr['jpush_id']))?$msg_arr['jpush_id']:"";
             $end_time =(isset($msg_arr['end_time']) && !empty($msg_arr['end_time']))?$msg_arr['end_time']:"";
+            $member_id =(isset($msg_arr['member_id']) && !empty($msg_arr['member_id']))?$msg_arr['member_id']:"";
+            $equip_id =(isset($msg_arr['equip_id']) && !empty($msg_arr['equip_id']))?$msg_arr['equip_id']:"";
         }else{
             $spare_phone =isset($result['spare_phone'])?$result['spare_phone']:"";
             $name =(isset($msg_arr['name']) && !empty($msg_arr['name']))?$msg_arr['name']:$result['name'];
@@ -56,6 +58,8 @@ protected $autoWriteTimestamp = false;
             $spare_phone =(isset($msg_arr['spare_phone']) && !empty($msg_arr['spare_phone']))?$msg_arr['spare_phone']:$spare_phone;
             $jpush_id =(isset($msg_arr['jpush_id']) && !empty($msg_arr['jpush_id']))?$msg_arr['jpush_id']:$result['jpush_id'];
             $end_time =(isset($msg_arr['end_time']) && !empty($msg_arr['end_time']))?$msg_arr['end_time']:$result['end_time'];
+            $member_id =(isset($msg_arr['member_id']) && !empty($msg_arr['member_id']))?$msg_arr['member_id']:$result['member_id'];
+            $equip_id =(isset($msg_arr['equip_id']) && !empty($msg_arr['equip_id']))?$msg_arr['equip_id']:$result['equip_id'];
         }
         $save_arr=[
           'name'=>$name,  
@@ -64,6 +68,8 @@ protected $autoWriteTimestamp = false;
           'spare_phone'=>$spare_phone,  
           'jpush_id'=>$jpush_id,  
           'end_time'=>$end_time,  
+          'member_id'=>$member_id,  
+          'equip_id'=>$equip_id,  
         ];
         $redis->set($equip_code.'_detail',json_encode($save_arr));
         return true;

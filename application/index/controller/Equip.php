@@ -144,7 +144,8 @@ class Equip extends ApiBase
             $msg_arr['name']=$name;
             $msg_arr['warm_phone']=$member_result['account'];
             $msg_arr['spare_phone']="";
-            
+            $msg_arr['member_id']=$member_id;
+            $msg_arr['equip_id']=$qr_result['id'];
             
             //到期时间
             $msg_arr['end_time']=$end_time;
@@ -238,6 +239,9 @@ class Equip extends ApiBase
             //获取jpush_id
             $member_result =db('Member')->find($member_id);
             $msg_arr['jpush_id']=$member_result['jpush_id'];
+            $msg_arr['member_id']=$member_id;
+            $msg_arr['equip_id']=$result['id'];
+            
             
             $msg_arr['name']=$name;
             $model_phone->changePhoneVerify($warm_phone,3);
