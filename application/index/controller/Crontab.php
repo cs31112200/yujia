@@ -533,7 +533,8 @@ class Crontab extends Base
         foreach($result as $k=>$v){
             $temp_json = json_decode($v,true);
             $the_data =$temp_json['data'];
-            print_r($the_data);exit;
+            $the_data = json_decode($the_data,true);
+          //  print_r($the_data);exit;
             switch($temp_json['code']){
                 
                 //推送存储
