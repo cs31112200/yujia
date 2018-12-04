@@ -558,6 +558,7 @@ class Crontab extends Base
                     $temp2['type']=1;
                     $temp2['recall_count']=1;
                     $temp2['status']=0;
+                    $temp2['create_time']=time();
                     $bj_data[]=$temp2;
                     
                     break;
@@ -565,9 +566,15 @@ class Crontab extends Base
                     break;
             }
         }
+
+        $insert_result1=db('Message')->insertAll($temp1);
+
+        $insert_result2=db('PhoneVoice')->insertAll($temp2);
+
+        $redis->ltrim('message_log',0,-1);
         
-        print_r($tui_data);
-        print_r($bj_data);
+  //      print_r($tui_data);
+//        print_r($bj_data);
     }
     
     
