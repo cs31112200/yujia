@@ -573,6 +573,8 @@ class Crontab extends Base
 
         $redis->ltrim('message_log',0,-1);
         
+        echo $insert_result1."  ".$insert_result2;
+        print_r($result);
   //      print_r($tui_data);
 //        print_r($bj_data);
     }
