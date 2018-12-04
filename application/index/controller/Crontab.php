@@ -554,7 +554,7 @@ class Crontab extends Base
                     $temp2['telephone']=$the_data['telephone'];
                     $temp2['biz_id']=$the_data['bizId'];
                     $temp2['senddata']=$the_data['sendData'];
-                    $temp2['temp']=$the_data['template'];
+                    $temp2['tmp']=$the_data['template'];
                     $temp2['type']=1;
                     $temp2['recall_count']=1;
                     $temp2['status']=0;
