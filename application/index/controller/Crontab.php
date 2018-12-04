@@ -576,8 +576,8 @@ class Crontab extends Base
          var_dump($insert_result1);
          var_dump($insert_result2);
         print_r($result);
-  //      print_r($tui_data);
-//        print_r($bj_data);
+        print_r($tui_data);
+        print_r($bj_data);
     }
     
     
