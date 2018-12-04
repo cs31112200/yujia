@@ -522,7 +522,14 @@ class Crontab extends Base
         $this->clear_collect_cache($redis);
     }
     
-    
+/*消息存储
+ * 
+ */    
+    public function save_message_log(){
+        $redis= initRedis();
+        $result =$redis->lrange('message_log',0,-1);
+        print_r($result);
+    }
     
     
     
