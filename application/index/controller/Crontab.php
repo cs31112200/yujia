@@ -567,17 +567,12 @@ class Crontab extends Base
             }
         }
 
-        $insert_result1=db('Message')->insertAll($temp1);
+        $insert_result1=db('Message')->insertAll($tui_data);
 
-        $insert_result2=db('PhoneVoice')->insertAll($temp2);
+        $insert_result2=db('PhoneVoice')->insertAll($bj_data);
 
-        $redis->ltrim('message_log',0,-1);
-        
-         var_dump($insert_result1);
-         var_dump($insert_result2);
-        print_r($result);
-        print_r($tui_data);
-        print_r($bj_data);
+        $redis->ltrim('message_log',-1,0);
+
     }
     
     
