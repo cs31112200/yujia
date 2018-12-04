@@ -528,7 +528,44 @@ class Crontab extends Base
     public function save_message_log(){
         $redis= initRedis();
         $result =$redis->lrange('message_log',0,-1);
-        print_r($result);
+        
+        $tui_data=$bj_data=[];
+        foreach($result as $k=>$v){
+            $temp_json = json_decode($v,true);
+            $the_data =$temp_json['data'];
+            switch($temp_json['code']){
+                
+                //推送存储
+                case 0:
+                    $temp1['member_id']=$the_data['memberId'];
+                    $temp1['create_time']=$the_data['createTime'];
+                    $temp1['content']=$the_data['content'];
+                    $temp1['title']=$the_data['title'];
+                    $temp1['type']=2;
+                    $temp1['status']=0;
+                    $tui_data[]=$temp1;
+                    
+                    break;
+                
+                //报警存储
+                case 1:
+                    $temp2['telephone']=$the_data['telephone'];
+                    $temp2['biz_id']=$the_data['bizId'];
+                    $temp2['send_data']=$the_data['sendData'];
+                    $temp2['temp']=$the_data['template'];
+                    $temp2['type']=1;
+                    $temp2['recall_count']=1;
+                    $temp2['status']=0;
+                    $bj_data[]=$temp2;
+                    
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        print_r($tui_data);
+        print_r($bj_data);
     }
     
     
