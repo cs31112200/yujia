@@ -384,26 +384,27 @@ class Crontab extends Base
     
     public function clear_equip_cache(){
         $redis = initRedis();
-        $time =strtotime('2018-10-21 23:59:59');
+        $time =time();
      //   $time =strtotime(date('Y-m-d',time()))+600;
         $all_keys =$redis->keys('*_electric_history');
         if(!empty($all_keys)){
             foreach($all_keys as $k=>$v){
-                $all_value =$redis->lrange($v,0,-1);
-                $count =0;
-                if(!empty($all_value)){
-                    foreach($all_value as $k1=>$v1){
-                        $the_value = json_decode($v1,true);
-                        if($time>$the_value['time']){
-                            $count++;
-                        }
-                    }
-                    if($count>0){
-                        $redis->ltrim($v,$count,-1); 
-                    }
-                    
-               //     print_r($redis->lrange($v,0,-1));exit;
-                }
+                $redis->ltrim($v,-1,0);
+//                $all_value =$redis->lrange($v,0,-1);
+//                $count =0;
+//                if(!empty($all_value)){
+//                    foreach($all_value as $k1=>$v1){
+//                        $the_value = json_decode($v1,true);
+//                        if($time>$the_value['time']){
+//                            $count++;
+//                        }
+//                    }
+//                    if($count>0){
+//                        $redis->ltrim($v,$count,-1); 
+//                    }
+//                    
+//               //     print_r($redis->lrange($v,0,-1));exit;
+//                }
             }
         }
         print_r($all_keys);
