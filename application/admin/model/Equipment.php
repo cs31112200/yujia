@@ -57,11 +57,13 @@ class Equipment extends Base{
 
         $sql =$this->alias('a')
             ->join($prex.'equipment_type b','a.type=b.id','left')
+            ->join($prex.'member_equip c','a.id=c.equip_id','left')
             ->field('a.id,a.equip_code,a.qrcode,a.qrcode_pic,a.card_num,a.purchase_fee,a.fee,a.agent_fee,a.annual_fee,a.agent_id,a.electric,a.product_id,a.status,
-                    a.connect_status,a.init_count,a.sort,a.batch_id,a.update_time,a.create_time,b.type_name as type_name')
+                    a.connect_status,a.init_count,a.sort,a.batch_id,a.update_time,a.create_time,b.type_name as type_name,c.is_connect,a.eq_type')
             ->where($map)->order('id desc')->limit(($page-1)*$page_size.','.$page_size)->buildSql();
 //        $sql =$this->where($map)->limit(($page-1)*$page_size.','.$page_size)->buildSql();
         $result =$this->query($sql);
+//        dump($result);exit();
         return $this->generalResult($result,$count);
     }
 
@@ -77,7 +79,7 @@ class Equipment extends Base{
 
             $color_arr =$this->get_status_color();
             $name_arr =$this->get_status_name();
-
+            $type_name =$this->get_type_name();
             foreach($list as $k=>$v){
 //              $list[$k]['type_name']=model('EquipmentType')->getFieldsValue(['id'=>$v['type']],'type_name');
                 $list[$k]['status_name']=$statusarr[$v['status']];
@@ -87,8 +89,18 @@ class Equipment extends Base{
 //              $list[$k]['agent_fee']=isset($all_products[$v['product_id']])?$all_products[$v['product_id']]['cut_fee_first']:0;
                 $list[$k]['status_color']=$color_arr[$v['status']];
                 $list[$k]['status_name']=$name_arr[$v['status']];
+                $list[$k]['eq_type_name']=$type_name[$v['eq_type']];
                 $list[$k]['create_time']=date('Y-m-d H:m:s',$list[$k]['create_time']);
                 $list[$k]['qrcode_pic']=generalQnyImg($list[$k]['qrcode_pic']);
+                if($list[$k]['is_connect']==1){
+                    $list[$k]['is_connect']='连接正常';
+                }
+                if($list[$k]['is_connect']==2){
+                    $list[$k]['is_connect']='未连接';
+                }
+                if(empty($list[$k]['is_connect'])){
+                    $list[$k]['is_connect']='未使用';
+                }
             }
         }
         //  print_r($list);exit;
@@ -138,6 +150,17 @@ class Equipment extends Base{
 
 
     public function __my_before_insert(&$data){
+        
+        $eq_type =isset($data['eq_type'])?$data['eq_type']:0;
+        
+        $type_name =$this->get_type_name();
+        if(!isset($type_name[$eq_type])){
+            $this->setError('请选择正确的设备类型');
+            return false;
+        }
+        
+        
+        
         if(!empty($data['product_id'])){
             $price=db('ProductPrice')->where('id',$data['product_id'])->find();
             $data['fee']=$price['fee'];
@@ -238,5 +261,14 @@ class Equipment extends Base{
             $equipment->isUpdate()->saveAll($update);
         }
     }
+    
+    public function get_type_name(){
+        return [
+          1=>'普通',
+          2=>'仅控制器',
+        ];
+    }
+    
+    
 
 }

@@ -90,42 +90,43 @@ protected $autoWriteTimestamp = false;
         $result =db($this->getTheTable())->alias('a')
                ->join($prex.'equipment b','a.equip_id=b.id','LEFT')
                ->join($prex.'pool_type c','a.pool_type=c.id','LEFT')
-               ->field('a.gd_id,a.equip_status,a.init_count,a.annual_fee,a.equip_img,a.elec_kz,a.warm_phone,a.id,a.spare_phone,a.water_name,a.equip_id,a.pool_type,c.type_name,a.name,b.connect_status,b.equip_code,a.warn_status,a.is_connect')->where($data)->select();
+               ->field('a.gd_id,a.equip_status,a.init_count,a.annual_fee,a.equip_img,a.elec_kz,a.warm_phone,a.id,a.spare_phone,a.water_name,a.equip_id,a.pool_type,c.type_name,a.name,b.connect_status,b.equip_code,a.warn_status,a.is_connect,b.eq_type')->where($data)->select();
         
         if(!empty($result)){
             $redis = initRedis();
             $model_memberaera=model('index/MemberAera');
             foreach($result as $k=>$v){
-                
-                
                 $result[$k]['pip_count']=empty($pip_list)?0:count($pip_list);
                 $result[$k]['equip_img']= generalQnyImg($v['equip_img']);
                 $elec =$this->getLastElec($v['equip_code']);
                 $result[$k]['electric']=$elec['electric'];
                 $result[$k]['elec_time']=$elec['elec_time'];
                 $result[$k]['collector_list']=model('admin/EquipCollector')->getMemberCollector($member_id,$v['equip_id']);
-                
+
                 //获取我的管道列表
                 $pip_list =$model_memberaera->getMyEquipPip($member_id,$v['equip_id']);
-                //获取通道的状态
-                $eq_name ='equip_slave_'.$v['equip_code'];
-                $slave_json =$redis->get($eq_name);
-                $slave_arr =json_decode($slave_json,true);
-                if(!empty($slave_arr)){
-                   
-                    foreach($pip_list as $k1=>$v1){
-                        if(!empty($slave_arr) && in_array($v1['num'],$slave_arr)){
-                            $pip_list[$k1]['is_normal']=0;
-                        }else{
-                            $pip_list[$k1]['is_normal']=1;
-                        }
-
-                    }
-                }
+//                //获取通道的状态
+//                $eq_name ='equip_slave_'.$v['equip_code'];
+//                $slave_json =$redis->get($eq_name);
+//                $slave_arr =json_decode($slave_json,true);
+//
+//                if(!empty($slave_arr)){
+//                   
+//                    foreach($pip_list as $k1=>$v1){
+//                        if(!empty($slave_arr) && in_array($v1['num'],$slave_arr)){
+//                            $pip_list[$k1]['is_normal']=0;
+//                        }else{
+//                            $pip_list[$k1]['is_normal']=1;
+//                        }
+//
+//                    }
+//                }
                 $result[$k]['pip_list']=$pip_list;
-                
+               // dump($result);exit();
             }
+
         }
+
         return $result;
     }
     

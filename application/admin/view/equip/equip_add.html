@@ -16,7 +16,7 @@
 <form class="layui-form layui-form-pane form-horizontal" action="{:url($_toMethod)}" method="post"  validatable="true" name="form1" id="form1" enctype="multipart/form-data">
     <input type="hidden" name="id" value="{$app.id|default=''}">
 
-
+     <input type="hidden" name="type" value="{$app.type|default='11'}">
 
     <div class="layui-form-item" >
         <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;批次号</label>
@@ -27,9 +27,10 @@
     <div class="layui-form-item" >
         <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;设备类型</label>
         <div class="layui-input-block">
-            <?php   $theids =isset($app['type'])?$app['type']:0; echo (model('Ui')->getDbSelectList('equipment_type',['status'=>1],'id','type_name','type','getShowType',$theids)); ?>
+            <?php   $select =isset($app['eq_type'])?$app['eq_type']:0; echo (model('Ui')->getModelNorSelectList('equipment','get_type_name','','eq_type','',$select)); ?>
         </div>
     </div>
+    
     <div class="layui-form-item" >
         <label class="layui-form-label" pane><span class="layui-badge-dot "></span>&nbsp;设备码</label>
         <div class="layui-input-block">
