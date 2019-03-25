@@ -182,9 +182,18 @@ protected $autoWriteTimestamp = false;
         }else{
              $data['the_day']=[['egt',$first_time],['elt',$end_time],'and'];
         }
-
-
-        $result =db($this->getTheTable())->where($data)->select();
+        
+        if($type<=2){
+            $result =db($this->getTheTable())->field('hour,temperature,ph,oxygen')->where($data)->select();
+        }else if($type<=7){
+            $result =db($this->getTheTable())->field('the_day,AVG(temperature) as temperature,AVG(ph) as ph,AVG(oxygen) as oxygen')->where($data)->group('the_day')->select();
+        }else if($type<=8){
+             $result =db($this->getTheTable())->field('the_day,month,AVG(temperature) as temperature,AVG(ph) as ph,AVG(oxygen) as oxygen')->where($data)->group('month')->select();
+        }else{
+            $result =db($this->getTheTable())->field('the_day,AVG(temperature) as temperature,AVG(ph) as ph,AVG(oxygen) as oxygen')->where($data)->select();
+        }
+      //  print_r($result);exit;
+        
         $return1=$return2=$return3=[];$i=0;
         if(!empty($result)){
             $have1=$hav2=[];
@@ -198,7 +207,7 @@ protected $autoWriteTimestamp = false;
                     $return3[$h]['time']=$v['hour'];
                     $return3[$h]['value']=sprintf("%.2f",$v['oxygen']);
                     $i++;
-                }else if($type==7){
+                }else if($type<=7){
                     $h =date('d',strtotime($v['the_day']));
                     $return1[$v['the_day']]['time']=$h;
                     $return1[$v['the_day']]['value']=sprintf("%.2f",$v['temperature']);
