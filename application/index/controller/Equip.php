@@ -291,8 +291,10 @@ class Equip extends ApiBase
      */
     public function myEquipList(){
         $member_id =$this->verifyUser();
+        $this->__checkParam('type',$this->input);
+        extract($this->input);
         $equip_id =isset($this->input['equip_id'])?$this->input['equip_id']:0;
-        $result =model('MemberEquip')->getMyEquipList($member_id,$equip_id);
+        $result =model('MemberEquip')->getMyEquipList($member_id,$equip_id,$type);
         if(empty($result)){
             $this->returnJson(0,'暂无设备');
         }else{
@@ -1199,6 +1201,16 @@ class Equip extends ApiBase
 //                }
 //            }
 //        }
+//        dump($result);exit();
+        $equip=db('Equipment')->where('equip_code',$equip_code)->find();
+        if(!empty($equip)){
+            $data['equip_id']=$equip['id'];
+            $data['member_id']=$member_id;
+            $vigilance=db('Vigilance')->where($data)->select();
+            if(!empty($vigilance)){
+                $result['value']=$vigilance;
+            }
+        }
         $this->returnJsonData(1, '获取成功', $result);
 
     }
@@ -1225,65 +1237,120 @@ class Equip extends ApiBase
         //获取数字对应的星期
         return $weekArr[$number_wk];
     }
+//    public function addVigilance(){
+//        $member_id =$this->verifyUser();
+//        if(request()->isPost()) {
+////        $this->__checkParam('equip_id,type,low_value,high_value',$this->input);
+//            $this->__checkParam('value',$this->input);
+//            extract($this->input);
+////            $value=array(
+////                array('type'=>'1','low_value'=>'8','high_value'=>'12'),
+////                array('type'=>'2','low_value'=>'11','high_value'=>'18'),
+////                array('type'=>'3','low_value'=>'10','high_value'=>'14'),
+////            );
+//            $param['member_id']=$member_id;
+//            $param['equip_id']=$equip_id;
+//            $equip=db('MemberEquip')->where($param)->find();
+//            if(empty($equip)){
+//                $this->returnJson(0, '非法操作');
+//            }
+//            if (isset($this->input['id']) && !empty(intval($this->input['id']))) {
+//                $data1['id']=intval($this->input['id']);
+//                $result = db('Vigilance')->find($data1['id']);
+//                if (empty($result) || $result['member_id'] != $member_id) {
+//                    $this->returnJson(0, '非法操作');
+//                }
+//                db('Vigilance')->where($param)->delete();
+//            }
+//            $arr=[];
+//            foreach($value as $k=>$v){
+//                $data['type']=$v['type'];
+//                $data['low_value']=$v['low_value'];
+//                $data['high_value']=$v['high_value'];
+//                $data['member_id']=$member_id;
+//                $data['equip_id']=$equip_id;
+//                $data['status']=1;
+//                $data['create_time']=time();
+//                $arr[]=$data;
+//            }
+//            $result=db('Vigilance')->insertAll($arr);
+//            if(!empty($result)){
+//                $this->returnJson(1,'操作成功');
+//            }else{
+//                $this->returnJson(0,'操作失败');
+//            }
+//        }else{
+//            $vigilance['member_id']=$member_id;
+//            $vigilance['equip_id']=input('equip_id');
+//            $result1=db('Vigilance')->where($vigilance)->order('type')->select();
+//            $arr=[];
+//            foreach($result1 as $k=>$v){
+//                $result['type']=$v['type'];
+//                $result['low_value']=$v['low_value'];
+//                $result['high_value']=$v['high_value'];
+//                $arr[]=$result;
+//                $arr['member_id']=$member_id;
+//                $arr['equip_id']=$v['equip_id'];
+//                $arr['create_time']=$v['create_time'];
+//                $arr['status']=$v['status'];
+//                $arr['id']=$v['id'];
+//            }
+//            $this->returnJsonData(1,'获取成功',$arr);
+//        }
+//    }
     public function addVigilance(){
         $member_id =$this->verifyUser();
-        if(request()->isPost()) {
-//        $this->__checkParam('equip_id,type,low_value,high_value',$this->input);
-            $this->__checkParam('equip_id,value',$this->input);
-            extract($this->input);
-//            $value=array(
-//                array('type'=>'1','low_value'=>'8','high_value'=>'12'),
-//                array('type'=>'2','low_value'=>'11','high_value'=>'18'),
-//                array('type'=>'3','low_value'=>'10','high_value'=>'14'),
-//            );
-            $param['member_id']=$member_id;
-            $param['equip_id']=$equip_id;
-            $equip=db('MemberEquip')->where($param)->find();
-            if(empty($equip)){
+        $this->__checkParam('equip_id,value',$this->input);
+        extract($this->input);
+        $value1=explode(',',$value);
+        $vigilance=array(
+            array('type'=>'1','low_value'=>"$value1[0]",'high_value'=>"$value1[1]"),
+            array('type'=>'2','low_value'=>"$value1[2]",'high_value'=>"$value1[3]"),
+            array('type'=>'3','low_value'=>"$value1[4]",'high_value'=>"$value1[5]"),
+        );
+        $param['member_id']=$member_id;
+        $param['equip_id']=$equip_id;
+        $equip=db('MemberEquip')->where($param)->find();
+        if(empty($equip)){
+            $this->returnJson(0, '非法操作');
+        }
+        if (isset($this->input['id']) && !empty(intval($this->input['id']))) {
+            $data1['id']=intval($this->input['id']);
+            $result = db('Vigilance')->find($data1['id']);
+            if (empty($result) || $result['member_id'] != $member_id || $result['equip_id'] != $equip_id) {
                 $this->returnJson(0, '非法操作');
             }
-            if (isset($this->input['id']) && !empty(intval($this->input['id']))) {
-                $data1['id']=intval($this->input['id']);
-                $result = db('Vigilance')->find($data1['id']);
-                if (empty($result) || $result['member_id'] != $member_id) {
-                    $this->returnJson(0, '非法操作');
-                }
-                db('Vigilance')->where($param)->delete();
-            }
-            $arr=[];
-            foreach($value as $k=>$v){
-                $data['type']=$v['type'];
-                $data['low_value']=$v['low_value'];
-                $data['high_value']=$v['high_value'];
-                $data['member_id']=$member_id;
-                $data['equip_id']=$equip_id;
-                $data['status']=1;
-                $data['create_time']=time();
-                $arr[]=$data;
-            }
-            $result=db('Vigilance')->insertAll($arr);
-            if(!empty($result)){
-                $this->returnJson(1,'操作成功');
-            }else{
-                $this->returnJson(0,'操作失败');
-            }
+            db('Vigilance')->where($param)->delete();
+        }
+        $arr=[];
+        foreach($vigilance as $k=>$v){
+            $data['type']=$v['type'];
+            $data['low_value']=$v['low_value'];
+            $data['high_value']=$v['high_value'];
+            $data['member_id']=$member_id;
+            $data['equip_id']=$equip_id;
+            $data['status']=1;
+            $data['create_time']=time();
+            $arr[]=$data;
+        }
+        $result=db('Vigilance')->insertAll($arr);
+        if(!empty($result)){
+            $this->returnJson(1,'操作成功');
         }else{
-            $vigilance['member_id']=$member_id;
-            $vigilance['equip_id']=input('equip_id');
-            $result1=db('Vigilance')->where($vigilance)->order('type')->select();
-            $arr=[];
-            foreach($result1 as $k=>$v){
-                $result['type']=$v['type'];
-                $result['low_value']=$v['low_value'];
-                $result['high_value']=$v['high_value'];
-                $arr[]=$result;
-                $arr['member_id']=$member_id;
-                $arr['equip_id']=$v['equip_id'];
-                $arr['create_time']=$v['create_time'];
-                $arr['status']=$v['status'];
-                $arr['id']=$v['id'];
-            }
-            $this->returnJsonData(1,'获取成功',$arr);
+            $this->returnJson(0,'操作失败');
+        }
+    }
+    public function get_vigilance_list(){
+        $member_id =$this->verifyUser();
+        $this->__checkParam('equip_id',$this->input);
+        extract($this->input);
+        $param['member_id']=$member_id;
+        $param['equip_id']=$equip_id;
+        $result=db('Vigilance')->where($param)->select();
+        if(!empty($result)){
+            $this->returnJsonData(1,'操作成功',$result);
+        }else{
+            $this->returnJson(0,'操作失败');
         }
     }
 }

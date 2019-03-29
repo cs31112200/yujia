@@ -78,7 +78,7 @@ protected $autoWriteTimestamp = false;
 /*获取我的设备列表
  * 
  */    
-    public function getMyEquipList($member_id,$equip_id=0){
+    public function getMyEquipList($member_id,$equip_id=0,$type=0){
         
         $data=[
             'member_id'=>$member_id
@@ -96,6 +96,12 @@ protected $autoWriteTimestamp = false;
             $redis = initRedis();
             $model_memberaera=model('index/MemberAera');
             foreach($result as $k=>$v){
+                if($type!=0 && $type!=$v['eq_type']){
+                    unset($result[$k]);
+                    continue;
+                }
+                
+                
                 $result[$k]['pip_count']=empty($pip_list)?0:count($pip_list);
                 $result[$k]['equip_img']= generalQnyImg($v['equip_img']);
                 $elec =$this->getLastElec($v['equip_code']);

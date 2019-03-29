@@ -224,7 +224,7 @@ protected $autoWriteTimestamp = false;
                     $return3[$v['month']]['time']=$h;
                     $return3[$v['month']]['value']=sprintf("%.2f",$v['oxygen']);
                 }else{
-                    $h =date('d',strtotime($v['the_day']));
+                    $h =$v['the_day'];
                     $return1[$v['the_day']]['time']=$h;
                     $return1[$v['the_day']]['value']=sprintf("%.2f",$v['temperature']);
                     $return2[$v['the_day']]['time']=$h;
