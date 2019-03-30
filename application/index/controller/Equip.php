@@ -291,8 +291,9 @@ class Equip extends ApiBase
      */
     public function myEquipList(){
         $member_id =$this->verifyUser();
-        $this->__checkParam('type',$this->input);
-        extract($this->input);
+//        $this->__checkParam('type',$this->input);
+//        extract($this->input);
+        $type =isset($this->input['type'])?$this->input['type']:0;
         $equip_id =isset($this->input['equip_id'])?$this->input['equip_id']:0;
         $result =model('MemberEquip')->getMyEquipList($member_id,$equip_id,$type);
         if(empty($result)){
